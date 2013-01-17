@@ -2,7 +2,8 @@
 class php-wmp {
 
   package { 'php':
-    ensure  => installed
+    ensure  => installed,
+    require => Package['httpd'],
   }
 
   file { 'php.ini':
@@ -13,15 +14,18 @@ class php-wmp {
   }
 
   package { 'php-mysql':
-    ensure  => installed
+    ensure  => installed,
+    require => Package['php'],      
   }
 
   package { 'php-mbstring':
-    ensure  => installed
+    ensure  => installed,
+    require => Package['php'],
   }
 
   package { 'php-pecl-apc':
-    ensure  => installed
+    ensure  => installed,
+    require => Package['php'],
   }
 
   file { 'apc.ini':
@@ -32,15 +36,18 @@ class php-wmp {
   }
 
   package { 'php-intl':
-    ensure  => installed
+    ensure  => installed,
+    require => Package['php'],
   }
 
   package { 'php-devel':
-    ensure  => installed
+    ensure  => installed,
+    require => Package['php'],
   }
 
   package { 'curl':
-    ensure  => installed
+    ensure  => installed,
+    require => Package['php'],
   }
 
 }
