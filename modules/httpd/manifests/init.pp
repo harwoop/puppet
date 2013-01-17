@@ -22,6 +22,7 @@ class httpd {
   file { 'welcome.conf':
     path    => '/etc/httpd/conf.d/welcome.conf',
     ensure  => absent,
+    require => Package['httpd'],
   }
 
 }
