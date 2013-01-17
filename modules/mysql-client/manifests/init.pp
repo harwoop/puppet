@@ -8,7 +8,7 @@ class mysql-client {
     path    => '/etc/my.cnf',
     ensure  => file,
     require => Package['mysql'],
-    source  => "puppet:///modules/cup-mysql-client/my.cnf",
+    source  => "puppet:///modules/mysql-client/my.cnf",
   }
 
 

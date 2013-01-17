@@ -1,4 +1,4 @@
-name    'cup-wmp-site'
+name    'httpd'
 version '0.0.1'
 source 'UNKNOWN'
 author 'cup'

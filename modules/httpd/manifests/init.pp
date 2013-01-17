@@ -16,7 +16,7 @@ class httpd {
     path    => '/etc/httpd/conf/httpd.conf',
     ensure  => file,
     require => Package['httpd'],
-    source  => "puppet:///modules/cup-httpd/httpd.conf",
+    source  => "puppet:///modules/httpd/httpd.conf",
   }
 
   file { 'welcome.conf':

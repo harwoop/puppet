@@ -1,7 +1,7 @@
 class mysql-repl {
-  include cup-mysql-client
+  include mysql-client
   
-	package { cup-mysql-repl:
+	package { mysql-repl:
     ensure  => installed
   }
 

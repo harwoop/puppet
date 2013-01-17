@@ -9,7 +9,7 @@ class php-wmp {
     path    => '/etc/php.ini',
     ensure  => file,
     require => Package['php'],
-    source  => "puppet:///modules/cup-php-wmp/php.ini",
+    source  => "puppet:///modules/php-wmp/php.ini",
   }
 
   package { 'php-mysql':
@@ -28,7 +28,7 @@ class php-wmp {
     path    => '/etc/php.d/apc.ini',
     ensure  => file,
     require => Package['php-pecl-apc'],
-    source  => "puppet:///modules/cup-php-wmp/apc.ini",
+    source  => "puppet:///modules/php-wmp/apc.ini",
   }
 
   package { 'php-intl':

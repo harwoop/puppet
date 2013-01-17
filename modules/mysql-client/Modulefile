@@ -1,4 +1,4 @@
-name    'cup-httpd'
+name    'mysql-client'
 version '0.0.1'
 source 'UNKNOWN'
 author 'cup'
