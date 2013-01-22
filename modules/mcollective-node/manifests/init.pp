@@ -13,7 +13,6 @@ class mcollective-node {
   }
 
   service { 'mcollective':
-    name => $service_name,
     ensure => running,
     enable => true,
     subscribe => File['server.cfg'],
