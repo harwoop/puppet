@@ -11,7 +11,14 @@ class mcollective-node {
   package { 'rubygem-stomp':
     ensure  => installed,
   }
-         
+
+  service { 'mcollective':
+    name => $service_name,
+    ensure => running,
+    enable => true,
+    subscribe => File['server.cfg'],
+  }         
+
   file { 'server.cfg':
     path    => '/etc/mcollective/server.cfg',
     ensure  => file,
