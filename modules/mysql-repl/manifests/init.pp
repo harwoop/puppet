@@ -1,7 +1,8 @@
 class mysql-repl {
   include mysql-client
-  
-	package { mysql-repl:
+  include mysql-conf
+ 
+	package { cup-mysql-repl:
     ensure  => installed
   }
 
@@ -10,12 +11,5 @@ class mysql-repl {
 		ensure => running,
 		enable => true,
     subscribe => File['my.cnf'],
-	}
-
-	file { 'my.cnf':
-    path    => '/etc/my.cnf',
-    ensure  => file,
-    require => Package['mysql'],
-		source => 'puppet:///modules/mysql-repl/my.cnf',
 	}
 }
