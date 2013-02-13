@@ -50,4 +50,9 @@ class php-wmp {
     require => Package['php'],
   }
 
+  package { 'cup-php-pecl-mongo':
+    ensure  => installed,
+    require => Package['php'],
+  }
+
 }
