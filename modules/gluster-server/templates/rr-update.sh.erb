@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [ ! -n "$1" ]; then
+	echo "Usage: `basename $0` add|remove"
+	exit 65
+fi
+
+KEYFILE=/etc/cup/Knsupdate.aws.internal.+157+39899.private
+HOSTNAME="<%= dns_name %>"
+IP=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/local-ipv4`
+
+if [ ! -n "$IP" ]; then
+	echo "Could not detect ec2 ip address."
+	exit 65
+fi
+
+case "$1" in
+	"add" )
+cat<<EOF | /usr/bin/nsupdate -k $KEYFILE -v
+server ns1.aws.internal
+zone aws.internal
+update add $HOSTNAME.aws.internal 60 A $IP
+show
+send
+EOF
+;;
+	"remove" )
+cat<<EOF | /usr/bin/nsupdate -k $KEYFILE -v
+server ns1.aws.internal
+zone aws.internal
+update delete $HOSTNAME.aws.internal A $IP
+show
+send
+EOF
+;;
+	* ) echo "Unrecogised argument: use add or remove."
+;;
+
+esac
+

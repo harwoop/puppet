@@ -1,4 +1,4 @@
-class gluster-client ($device = undef, $mount = undef, $options = "") {
+class gluster-client ($device = "gluster-eu-west:/wmp-files", $mount = "/mnt", $options = "defaults") {
 
   package { 'fuse':
     ensure => installed,
@@ -21,14 +21,17 @@ class gluster-client ($device = undef, $mount = undef, $options = "") {
 
   if $mount and $device {
     notify { "Attempting to mount fs": }
-    file { "gluster_mp-$mount":
-      path => $mount,
+    file { "gluster_mount_point-$hostname":
+      path => $mount, 
       ensure => directory,
+      owner => "apache",
+      group => "apache",
+      mode => "0755",
       require => Package['glusterfs-fuse'],
     }
-    mount { "gluster_m-$mount":
+    mount { "gluster_mount_$hostname":
+      name  => $mount,
       device => $device,
-      name => $mount,
       fstype => 'glusterfs',
       options => $options,
       ensure => mounted,

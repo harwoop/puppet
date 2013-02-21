@@ -1,12 +1,13 @@
 # == Class: httpd
 class httpd {
+  include wmp-dirs
   
   package { 'httpd':
     ensure  => installed
   }
    
   service { 'httpd':
-    name      => $service_name,
+    name      => 'httpd',
     ensure    => running,
     enable    => true,
     subscribe => File['httpd.conf'],
@@ -25,4 +26,11 @@ class httpd {
     require => Package['httpd'],
   }
 
+  file { 'data-logs-httpd-dir':
+    path    => '/data/logs/httpd',
+    ensure  => directory,
+    owner   => 'apache',
+    group   => 'apache',
+    mode    => '0755',
+  }
 }
