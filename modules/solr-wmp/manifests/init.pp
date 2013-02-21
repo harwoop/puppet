@@ -33,7 +33,7 @@ class solr-wmp ( $master = undef, $master_url = "http://nosql-master.aws.interna
     group   => 'tomcat',
     mode   => '0644',
     source  => "puppet:///modules/solr-wmp/wmp.xml",
-  }
+  } ~>
 
   file { 'solr.xml':
     path    => '/data/solr/wmp/solr/solr.xml',
@@ -43,13 +43,13 @@ class solr-wmp ( $master = undef, $master_url = "http://nosql-master.aws.interna
     mode   => '0644',
     require => Package['cup-solr'],
     source  => "puppet:///modules/solr-wmp/solr.xml",
-  }
+  } 
 
   solr-wmp::config {'product':
     core => "product",
     master => $master,
     master_url => $master_url
-  }
+  } 
 
   solr-wmp::config {'search':
     core => "search",
