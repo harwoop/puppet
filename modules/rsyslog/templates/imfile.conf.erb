@@ -1,0 +1,10 @@
+$ModLoad imfile
+$InputFileName <%= @logfilename %>
+$InputFileTag <%= @filetag %>
+$InputFileStateFile <%= @statefile %>
+$InputFileSeverity <%= @severity %>
+$InputFileFacility <%= @factility %>
+$InputRunFileMonitor
+
+## check for new lines every 10 seconds
+$InputFilePollingInterval 10

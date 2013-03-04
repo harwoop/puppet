@@ -39,8 +39,8 @@ class haproxy-wmp {
     options   => {
       'mode'      => 'tcp',
       'balance'   => 'roundrobin',
-      'stick-table' => 'type ip size 1k expire 60m',
-      'stick'     => 'on src',
+#      'stick-table' => 'type ip size 1k expire 60m',
+#      'stick'     => 'on src',
       'option'    => 'httpchk',
     }
   }

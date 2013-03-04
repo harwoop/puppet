@@ -1,0 +1,3 @@
+# puppetmodule_rsyslog #
+
+This is the puppetmodule_rsyslog module. It provides...

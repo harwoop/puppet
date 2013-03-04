@@ -1,0 +1,1 @@
+# needed for puppet rspec

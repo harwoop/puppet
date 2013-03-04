@@ -2,12 +2,28 @@
 class mcollective-node {
   package { 'mcollective':
     ensure  => installed,
-  }
+  } ~>
          
   package { 'mcollective-common':
     ensure  => installed,
-  }
+  } ~>
          
+  package { 'mcollective-nrpe-agent':
+    ensure  => installed,
+  } ~>
+
+  package { 'mcollective-package-agent':
+    ensure  => installed,
+  } ~>
+
+  package { 'mcollective-puppet-agent':
+    ensure  => installed,
+  } ~>
+
+  package { 'mcollective-service-agent':
+    ensure  => installed,
+  } ~>
+
   package { 'rubygem-stomp':
     ensure  => installed,
   }

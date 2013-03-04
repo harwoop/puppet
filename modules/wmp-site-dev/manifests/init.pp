@@ -30,7 +30,8 @@ class wmp-site-dev ( $mysql = undef ) {
   file { 'wmp.conf':
     path    => '/etc/httpd/conf.d/wmp.conf',
     ensure  => file,
-    content  => template("wmp-site/wmp.conf.erb"),
+    content  => template("wmp-site-dev/wmp.conf.erb"),
+    notify  => Service['httpd'],
   }
 
 }

@@ -1,0 +1,9 @@
+name 'pcanham-puppetmodule_rsyslog'
+version ''
+
+author 'pcanham'
+license ''
+project_page ''
+source ''
+summary 'Package for installing server and client'
+description 'basic rsyslog module for deploying to Redhat dervivative machines'

@@ -13,7 +13,7 @@ class php-wmp {
     source  => "puppet:///modules/php-wmp/php.ini",
   }
 
-  package { 'php-mysql':
+  package { 'php-mysqlnd':
     ensure  => installed,
     require => Package['php'],      
   }
@@ -54,5 +54,17 @@ class php-wmp {
     ensure  => installed,
     require => Package['php'],
   }
+
+  package { 'cup-php-pecl-mysqlnd_qc':
+    ensure  => installed,
+    require => Package['php-mysqlnd'],
+  } ~>
+
+  file { 'mysqlnd_qc.ini':
+    path    => '/etc/php.d/mysqlnd_qc.ini',
+    ensure  => file,
+    source  => "puppet:///modules/php-wmp/mysqlnd_qc.ini",
+  }
+
 
 }
