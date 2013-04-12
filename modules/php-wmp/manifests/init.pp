@@ -23,6 +23,16 @@ class php-wmp {
     require => Package['php'],
   }
 
+  package { 'php-gd':
+    ensure  => installed,
+    require => Package['php'],
+  }
+
+  package { 'php-xml':
+    ensure  => installed,
+    require => Package['php'],
+  }
+
   package { 'php-pecl-apc':
     ensure  => installed,
     require => Package['php'],
