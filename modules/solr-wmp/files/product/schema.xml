@@ -97,34 +97,34 @@
       trailing underscores (e.g. _version_) are reserved.
    -->
   <field name="ean" type="string" indexed="true" stored="true" />        
-  <field name="titleCode" type="string" indexed="true" stored="true" />
+  <field name="titleCode" type="text_general" indexed="true" stored="true" />
   <field name="title" type="string" indexed="true" stored="true" />
-  <field name="subtitle" type="string" indexed="true" stored="true" />
+  <field name="subtitle" type="text_general" indexed="true" stored="true" />
   <field name="volumeNumber" type="string" indexed="true" stored="true" />
-  <field name="volumeTitle" type="string" indexed="true" stored="true" />
+  <field name="volumeTitle" type="text_general" indexed="true" stored="true" />
   <field name="partNumber" type="string" indexed="true" stored="true" />
-  <field name="partTitle" type="string" indexed="true" stored="true" />
-  <field name="editionNumber" type="string" indexed="true" stored="true" />
+  <field name="partTitle" type="text_general" indexed="true" stored="true" />
+  <field name="editionNumber" type="float" indexed="true" stored="true" />
   <field name="subject2Code" type="string" indexed="true" stored="true" />
   <field name="subject3Code" type="string" indexed="true" stored="true" />
-  <field name="publishedWith" type="string" indexed="true" stored="true" />
+  <field name="publishedWith" type="text_general" indexed="true" stored="true" />
   <field name="textbook" type="string" indexed="true" stored="true" />
   <field name="textbookCourse" type="string" indexed="true" stored="true" />
-  <field name="contents" type="string" indexed="true" stored="true" />
-  <field name="contributors" type="string" indexed="true" stored="true" />
-  <field name="readership" type="string" indexed="true" stored="true" />
-  <field name="market" type="string" indexed="true" stored="true" />
-  <field name="comparableTitles" type="string" indexed="true" stored="true" />
-  <field name="contentsPartsOnly" type="string" indexed="true" stored="true" />
-  <field name="contentsWithContribs" type="string" indexed="true" stored="true" />
-  <field name="competition" type="string" indexed="true" stored="true" />
-  <field name="specialPoints" type="string" indexed="true" stored="true" />
-  <field name="whatsNewInThisEdition" type="string" indexed="true" stored="true" />
-  <field name="copublisher" type="string" indexed="true" stored="true" />
-  <field name="biblioLine" type="string" indexed="true" stored="true" />
+  <field name="contents" type="text_general" indexed="true" stored="true" />
+  <field name="contributors" type="text_general" indexed="true" stored="true" />
+  <field name="readership" type="text_general" indexed="true" stored="true" />
+  <field name="market" type="text_general" indexed="true" stored="true" />
+  <field name="comparableTitles" type="text_general" indexed="true" stored="true" />
+  <field name="contentsPartsOnly" type="text_general" indexed="true" stored="true" />
+  <field name="contentsWithContribs" type="text_general" indexed="true" stored="true" />
+  <field name="competition" type="text_general" indexed="true" stored="true" />
+  <field name="specialPoints" type="text_general" indexed="true" stored="true" />
+  <field name="whatsNewInThisEdition" type="text_general" indexed="true" stored="true" />
+  <field name="copublisher" type="text_general" indexed="true" stored="true" />
+  <field name="biblioLine" type="text_general" indexed="true" stored="true" />
   <field name="isbn" type="string" indexed="true" stored="true" />
   <field name="seriesCode" type="string" indexed="true" stored="true" multiValued="true" />
-  <field name="seriesLegend" type="string" indexed="true" stored="true" multiValued="true" />
+  <field name="seriesLegend" type="text_general" indexed="true" stored="true" multiValued="true" />
   <field name="formatLegend" type="string" indexed="true" stored="true"/>
   <field name="formatCode" type="string" indexed="true" stored="true"/>
   <field name="seriesNumber" type="string" indexed="true" stored="true" />
@@ -136,7 +136,7 @@
   <field name="averageReviewRating" type="string" indexed="true" stored="true" />
   <field name="wwwCoverUrl" type="string" indexed="true" stored="true" />
   <field name="wwwThumbUrl" type="string" indexed="true" stored="true" />
-  <field name="authorShort" type="string" indexed="true" stored="true" />
+  <field name="authorShort" type="text_general" indexed="true" stored="true" />
   <field name="widgetId" type="string" indexed="true" stored="true" />
   <field name="ebookPrice" type="string" indexed="true" stored="true" />
   <field name="ebookUrl" type="string" indexed="true" stored="true" />
@@ -147,7 +147,10 @@
   <field name="familyId" type="string" indexed="true" stored="true" />
   <field name="cboProductGroup" type="string" indexed="true" stored="true" />
   <field name="cboProductGroupLegend" type="string" indexed="true" stored="true" />
-  <field name="tags" type="string" indexed="true" stored="true"/>
+  <field name="tags" type="text_general" indexed="true" stored="true"/>
+  <field name="authors" type="text_general" indexed="true" stored="true"/>
+  <!-- This field will hold the authors in the right sequence based on the full authors relation in the API -->
+  <field name="authorsFull" type="text_general" indexed="true" stored="true" multiValued="true"/>
   
   <field name="isCLC" type="boolean" indexed="true" stored="true" />
 
@@ -174,7 +177,7 @@
 
   <field name="seriesSearchable" type="text_general" indexed="true" stored="false"/>
 
-  <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
+  <field name="text" type="text_general" indexed="true" stored="false" multiValued="true" termVectors="true"/>
   <field name="alphaTitleSort" type="alphaOnlySort" indexed="true" stored="false"/>
 
   <field name="_version_" type="long" indexed="true" stored="true"/>
@@ -182,17 +185,25 @@
   <field name="suggest_text" type="text_auto" indexed="true" stored="true"/>
   <field name="suggest" type="string" indexed="true" stored="true"/>
 
-  <field name="title_search" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="title_search" type="text_general_engram" indexed="true" stored="true" multiValued="true"/>
 
   <!-- Y / N -->
   <field name="isEbook" type="string" indexed="true" stored="true" />
 
   <!-- sourced from the product_reviews package -->
   <field name="averageRating" type="float" indexed="true" stored="true" />
+  <field name="relatedTitles" type="text_general" indexed="true" stored="true" multiValued="true"/>
+
+  <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
 
   <dynamicField name="availabilityCode_*" type="string" indexed="true" stored="true"/>
   <dynamicField name="availabilityLegend_*" type="string" indexed="true" stored="true"/>
   <dynamicField name="pubPrice_*" type="float"  indexed="true"  stored="true"/>
+  <dynamicField name="pubPriceNzd_*" type="float" indexed="true" stored="true"/>
+  <dynamicField name="pubPriceNzdCirca_*" type="float" indexed="true" stored="true"/>
+  <dynamicField name="pubPriceEuroCirca_*" type="float" indexed="true" stored="true"/>
+  <dynamicField name="pubPriceCanadaCirca_*" type="float" indexed="true" stored="true"/>
+
   <dynamicField name="pubAndEbookPrice_*" type="float" indexed="true" stored="true"/> 
 
   <dynamicField name="offerActive_*" type="string"  indexed="true"  stored="true"/>
@@ -207,6 +218,8 @@
 
   <dynamicField name="discountCode_*" type="string" indexed="true" stored="true"/>
   <dynamicField name="discountPct_*" type="float" indexed="true" stored="true"/>
+
+  <dynamicField name="hasAnyOfferActive_*" type="float" indexed="true" stored="true"/>
 
   <!-- Y / N -->
   <dynamicField name="isTextbook_*" type="string" indexed="true" stored="true" />
@@ -266,6 +279,7 @@
   <copyField source="biblioLine" dest="text"/>
   <copyField source="isbn" dest="text"/>
   <copyField source="tags" dest="text"/>
+  <copyField source="authors" dest="text"/>
 
   <copyField source="seriesLegend" dest="seriesSearchable"/>
 
@@ -440,6 +454,24 @@
         <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
         -->
         <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />
+        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="text_general_engram" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />
+        <!-- in this example, we will only use synonyms at query time
+        <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
+        -->
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.EdgeNGramFilterFactory" minGramSize="2" maxGramSize="15" side="front"/>
       </analyzer>
       <analyzer type="query">
         <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -714,7 +746,6 @@
                              refreshInterval: Number of minutes between each rates fetch (default: 1440, min: 60)
    -->
     <fieldType name="currency" class="solr.CurrencyField" precisionStep="8" defaultCurrency="USD" currencyConfig="currency.xml" />
-
  </types>
   
   <!-- Similarity is the scoring routine for each document vs. a query.
