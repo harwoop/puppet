@@ -12,7 +12,7 @@ apc.enabled=1
 ; The number of shared memory segments to allocate for the compiler cache. 
 apc.shm_segments=1
 ; The size of each shared memory segment, with M/G suffix
-apc.shm_size=64M
+apc.shm_size=<%= apc_cache_size %>
 ; A "hint" about the number of distinct source files that will be included or 
 ; requested on your web server. Set to zero or omit if you are not sure;
 apc.num_files_hint=1024

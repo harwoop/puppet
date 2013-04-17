@@ -1,5 +1,5 @@
 extension=mysqlnd_qc.so
-mysqlnd_qc.enable_qc=1
+mysqlnd_qc.enable_qc=<%= mysql_cache_enabled ? "1" : "0" %>
 mysqlnd_qc.ttl=4
 mysqlnd_qc.cache_by_default=1
 mysqlnd_qc.collect_statistics=1

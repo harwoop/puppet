@@ -1,5 +1,5 @@
 # == Class: php-wmp
-class php-wmp {
+class php-wmp ($mysql_cache_enabled = true, $apc_cache_size = "128M") {
 
   package { 'php':
     ensure  => installed,
@@ -42,7 +42,7 @@ class php-wmp {
     path    => '/etc/php.d/apc.ini',
     ensure  => file,
     require => Package['php-pecl-apc'],
-    source  => "puppet:///modules/php-wmp/apc.ini",
+    content  => template("php-wmp/apc.ini.erb"),
   }
 
   package { 'php-intl':
@@ -73,7 +73,7 @@ class php-wmp {
   file { 'mysqlnd_qc.ini':
     path    => '/etc/php.d/mysqlnd_qc.ini',
     ensure  => file,
-    source  => "puppet:///modules/php-wmp/mysqlnd_qc.ini",
+    content  => template("php-wmp/mysqlnd_qc.ini.erb"),
   }
 
 
