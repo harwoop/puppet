@@ -17,8 +17,8 @@ ExtendedStatus On
     </Location>
 
     <Directory "/data/httpd/wmp">
-	SetEnv WMP_MARKETING_SITE_BASE_URL http://wwwtest.cambridge.org
-	SetEnv WMP_MARKETING_SITE_BASE_URL_SSL https://wwwtest.cambridge.org
+	SetEnv WMP_MARKETING_SITE_BASE_URL http://<%= domain %>
+	SetEnv WMP_MARKETING_SITE_BASE_URL_SSL https://<%= domain %>
         SetEnv WMP_MARKETING_SITE_DIR_REL 
         SetEnv WMP_MARKETING_DB_SERVER <%= mysql %>
         SetEnv WMP_MARKETING_DB_USERNAME concrete_usr2012
@@ -38,7 +38,7 @@ ExtendedStatus On
         SetEnv WMP_MONGO_SERVER localhost
         SetEnv WMP_MONGO_PORT 27017
         SetEnv WMP_MONGO_REPLICA_SET wmp
-        SetEnv WMP_API_ROOT_URL http://wmp-uat-vyre.int.cambridge.org/CambridgeAPI/
+        SetEnv WMP_API_ROOT_URL http://api.cambridge.org/
 
         Options Indexes FollowSymLinks
         AllowOverride None
