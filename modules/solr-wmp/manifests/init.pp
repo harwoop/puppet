@@ -4,7 +4,7 @@ class solr-wmp ( $master = undef, $master_url = "http://nosql-master.aws.interna
   include tomcat
 
   package { 'cup-solr':
-    ensure  => installed,
+    ensure  => '4.2.1-cupel',
     require => Package['cup-apache-tomcat'],
   }
    

@@ -154,7 +154,6 @@
         or to add multiple fields to the same field for easier/faster searching.  -->
 
   <copyField source="content" dest="text"/>
-  <copyField source="attr_*" dest="text"/>
 
   <copyField source="cTitle" dest="title_search"/>
   <copyField source="cTitle" dest="spelling"/>
