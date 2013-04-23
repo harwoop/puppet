@@ -1,5 +1,5 @@
 # == Class: gluster-server
-class gluster-server ( $dns_name = "gluster-eu-west" ) {
+class gluster-server ( $cluster_hostname = "gluster-eu-west" ) {
   
   package { 'xfsprogs':
     ensure  => installed
@@ -50,21 +50,21 @@ class gluster-server ( $dns_name = "gluster-eu-west" ) {
     source => "puppet:///modules/gluster-server/glusterd"
   }
 
-  file { 'Knsupdate.aws.internal.+157+39899.private':
-    path    => '/etc/cup/Knsupdate.aws.internal.+157+39899.private',
-    ensure  => file,
-    mode    => 700,
-    require => Package['glusterfs-server'],
-    source => "puppet:///modules/gluster-server/Knsupdate.aws.internal.+157+39899.private"
-  }
-
-  file { 'rr-update.sh':
-    path    => '/usr/local/bin/rr-update.sh',
-    ensure  => file,
-    mode    => 755,
-    require => File['Knsupdate.aws.internal.+157+39899.private'],
-    content => template("gluster-server/rr-update.sh.erb")
-  }
+#  file { 'Knsupdate.aws.internal.+157+39899.private':
+#    path    => '/etc/cup/Knsupdate.aws.internal.+157+39899.private',
+#    ensure  => file,
+#    mode    => 700,
+#    require => Package['glusterfs-server'],
+#    source => "puppet:///modules/gluster-server/Knsupdate.aws.internal.+157+39899.private"
+#  }
+#
+#  file { 'rr-update.sh':
+#    path    => '/usr/local/bin/rr-update.sh',
+#    ensure  => file,
+#    mode    => 755,
+#    require => File['Knsupdate.aws.internal.+157+39899.private'],
+#    content => template("gluster-server/rr-update.sh.erb")
+#  }
 
   file { "brick":
     path => "/mnt/brick",
@@ -80,4 +80,5 @@ class gluster-server ( $dns_name = "gluster-eu-west" ) {
     ensure => mounted,
     require => Package['glusterfs-server'],
   }
+
 }
