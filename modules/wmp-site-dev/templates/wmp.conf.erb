@@ -27,6 +27,7 @@ ExtendedStatus On
         SetEnv WMP_MARKETING_SITE_CACHE apc
         SetEnv WMP_MARKETING_SITE_EVENTS true
         SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS Y
+	SetEnv IS_ADMIN_NODE <%= (admin_node ? "Y" : "N") %>
         SetEnv WMP_SOLR_SERVER localhost
         SetEnv WMP_SOLR_PORT 8080
         SetEnv WMP_SOLR_MASTER 192.168.31.122
