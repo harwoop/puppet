@@ -1,11 +1,13 @@
 #!/usr/bin/perl 
 #
+# use like so:
+# /usr/local/bin/snap_galera.pl /usr/local/bin/safesnap.sh /dev/xvdf db-hourly
 
 use DBI;
 
 my $db_username = "root";
 my $db_password = "sh33pd0g";
-my $backup_command = "/home/ec2-user/safesnap.sh /dev/xvdf daily";
+my $backup_command = join(" ", @ARGV);
 
 # Get our cluster address before we drop out of the cluster
 print "Connecting to local db\n";
