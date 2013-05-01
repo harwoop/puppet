@@ -28,6 +28,14 @@ ExtendedStatus On
         SetEnv WMP_MARKETING_SITE_EVENTS true
         SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS Y
 	SetEnv IS_ADMIN_NODE <%= (admin_node ? "Y" : "N") %>
+	SetEnv ADMIN_NODE_URL http://admin.aws.cambridgeuniversitypress.com/dashboard/
+	SetEnv WMP_SITE_ADMIN_NAME 'Cambridge University Press'
+	SetEnv WMP_SITE_ADMIN_EMAIL concrete5@cambridge.org
+	SetEnv WMP_API_USERNAME marketing
+	SetEnv WMP_API_PASSWORD 4RagEsw+g!spU*u
+	SetEnv WMP_VYRE_BASE_URL http://<%= domain %>
+	SetEnv WMP_IIS_BASE_URL http://<%= domain %>
+	SetEnv WMP_SALESFORCE_BASE_URL http://cambridge.prelive.cs13.force.com§
         SetEnv WMP_SOLR_SERVER localhost
         SetEnv WMP_SOLR_PORT 8080
         SetEnv WMP_SOLR_MASTER <%= nosql_master %>
@@ -85,6 +93,18 @@ ExtendedStatus On
         Order Deny,Allow
         Deny from all
     </Directory>
+
+    # IE7 compatibility fix
+    <IfModule mod_headers.c>
+      Header set X-UA-Compatible "IE=edge,chrome=1"
+      <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webapp|webm|webp|woff|xml|xpi)$">
+        Header unset X-UA-Compatible
+      </FilesMatch>
+    </IfModule>
+
+
+    # Additional mime types
+    AddType video/mp4 .m4v
 </VirtualHost>
 
 
