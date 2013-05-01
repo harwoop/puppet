@@ -1,6 +1,10 @@
 # == Class: backup-tools 
 class backup-tools {
   
+  package { 'perl-DBD-MySQL':
+    ensure  => installed,
+  }
+
   file { 'safesnap.sh':
     path    => '/usr/local/bin/safesnap.sh',
     ensure  => file,
