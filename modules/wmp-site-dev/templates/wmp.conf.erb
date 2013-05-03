@@ -28,14 +28,14 @@ ExtendedStatus On
         SetEnv WMP_MARKETING_SITE_EVENTS true
         SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS Y
 	SetEnv IS_ADMIN_NODE <%= (admin_node ? "Y" : "N") %>
-	SetEnv ADMIN_NODE_URL http://admin.aws.cambridgeuniversitypress.com/dashboard/
+	SetEnv ADMIN_NODE_URL http://admin.cambridge.org/dashboard/
 	SetEnv WMP_SITE_ADMIN_NAME 'Cambridge University Press'
 	SetEnv WMP_SITE_ADMIN_EMAIL concrete5@cambridge.org
 	SetEnv WMP_API_USERNAME marketing
 	SetEnv WMP_API_PASSWORD 4RagEsw+g!spU*u
 	SetEnv WMP_VYRE_BASE_URL http://<%= domain %>
 	SetEnv WMP_IIS_BASE_URL http://<%= domain %>
-	SetEnv WMP_SALESFORCE_BASE_URL http://cambridge.prelive.cs13.force.com§
+	SetEnv WMP_SALESFORCE_BASE_URL http://cambridge.prelive.cs13.force.com
         SetEnv WMP_SOLR_SERVER localhost
         SetEnv WMP_SOLR_PORT 8080
         SetEnv WMP_SOLR_MASTER <%= nosql_master %>
@@ -48,6 +48,7 @@ ExtendedStatus On
         SetEnv WMP_MONGO_PORT 27017
         SetEnv WMP_MONGO_REPLICA_SET wmp
         SetEnv WMP_API_ROOT_URL http://api.cambridge.org/
+        SetEnv WMP_USE_MINIFICATION <%= (admin_node ? "N" : "Y") %>
 
         Options Indexes FollowSymLinks
         AllowOverride None
