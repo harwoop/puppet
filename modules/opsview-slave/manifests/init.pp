@@ -100,6 +100,6 @@ class opsview-slave {
     owner => "nagios",
     group => "nagios",
     mode => 775,
-  } ~>
+  }
 
 }
