@@ -36,6 +36,10 @@ class opsview-slave {
     ensure => installed,
   }
 
+  package { 'mysql51-libs':
+    ensure => installed,
+  }
+
   exec { "install pymongo for nagios checks":
     creates => "/usr/lib/python2.6/site-packages/pymongo-2.5-py2.6-linux-x86_64.egg",
     cwd => "/root",
