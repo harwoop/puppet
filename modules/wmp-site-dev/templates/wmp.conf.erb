@@ -49,6 +49,7 @@ ExtendedStatus On
         SetEnv WMP_MONGO_REPLICA_SET wmp
         SetEnv WMP_API_ROOT_URL http://api.cambridge.org/
         SetEnv WMP_USE_MINIFICATION <%= (admin_node ? "N" : "Y") %>
+        SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS <%= (admin_node ? "N" : "Y") %>
 
         Options Indexes FollowSymLinks
         AllowOverride None
