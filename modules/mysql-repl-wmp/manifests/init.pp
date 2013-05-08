@@ -20,11 +20,11 @@ class mysql-repl-wmp {
     enable => true,
   } 
 
-  @@haproxy::balancermember { $hostname:
-    listening_service => 'mysql-cluster',
-    server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
-    ports             => '3306',
-    options           => 'check port 9200 inter 12000 rise 3 fall 3'
-  }
+#  @@haproxy::balancermember { $hostname:
+#    listening_service => 'mysql-cluster',
+#    server_names      => $::hostname,
+#    ipaddresses       => $::ipaddress,
+#    ports             => '3306',
+#    options           => 'check port 9200 inter 12000 rise 3 fall 3'
+#  }
 }
