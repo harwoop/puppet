@@ -11,6 +11,14 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $domain = "www.cambr
     require => Package['httpd'],
   } ~>
          
+  file { 'data-httpd-wmp-dir':
+    path    => '/data/httpd/wmp',
+    ensure  => directory,
+    owner   => 'apache',
+    group   => 'apache',
+    mode    => '0755',
+  } ~>
+
   file { 'data-logs-httpd-wmp-dir':
     path    => '/data/logs/httpd/wmp',
     ensure  => directory,
