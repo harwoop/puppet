@@ -1,0 +1,6 @@
+[cuprepo]
+name=CUP Custom Packages
+baseurl=http://puppet.aws.internal/
+enabled=1
+priority=1
+gpgcheck=0
