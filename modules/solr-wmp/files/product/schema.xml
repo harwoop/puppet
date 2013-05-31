@@ -151,6 +151,9 @@
   <field name="authors" type="text_general" indexed="true" stored="true"/>
   <!-- This field will hold the authors in the right sequence based on the full authors relation in the API -->
   <field name="authorsFull" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="eanTitle" type="string" indexed="true" stored="true" />
+
+  <field name="relatedTitles" type="text_general" indexed="true" stored="true" multiValued="true"/>
   
   <field name="isCLC" type="boolean" indexed="true" stored="true" />
 
@@ -192,7 +195,38 @@
 
   <!-- sourced from the product_reviews package -->
   <field name="averageRating" type="float" indexed="true" stored="true" />
-  <field name="relatedTitles" type="text_general" indexed="true" stored="true" multiValued="true"/>
+
+  <!-- Because families are also being sourced from this index, I've had to denormalize family fields 
+       against the title level too. -->
+
+  <field name="family_title" type="text_general" indexed="true" stored="true" />
+  <field name="family_shortTitle" type="text_general" indexed="true" stored="true" />
+  <field name="family_longDescription" type="text_general" indexed="true" stored="true" />
+  <field name="family_shortDescription" type="text_general" indexed="true" stored="true" />
+  <field name="family_subtitle" type="text_general" indexed="true" stored="true" />
+  <field name="family_editionNumber" type="text_general" indexed="true" stored="true" />
+  <field name="family_brandCode" type="text_general" indexed="true" stored="true" />
+  <field name="family_publicationTypeCode" type="text_general" indexed="true" stored="true" />
+  <field name="family_onixTitleRuleCode" type="text_general" indexed="true" stored="true" />
+  <field name="family_contactCode" type="text_general" indexed="true" stored="true" />
+  <field name="family_level1Notes" type="text_general" indexed="true" stored="true" />
+  <field name="family_pubSysIdLevel1" type="text_general" indexed="true" stored="true" />
+  <field name="family_sapIdLevel1" type="text_general" indexed="true" stored="true" />
+  <field name="family_recordStatus" type="text_general" indexed="true" stored="true" />
+  <field name="family_pubsysLanguageVariety" type="string" indexed="true" stored="true" />
+  <field name="family_pubsysLanguageLevel" type="string" indexed="true" stored="true" />
+  <field name="family_pubsysLanguageLevelCef" type="string" indexed="true" stored="true" />
+  <field name="family_pubsysLanguageLevelCefFull" type="string" indexed="true" stored="true" multiValued="true" />
+  <field name="family_pubSysComponentLevel" type="string" indexed="true" stored="true" />
+  <field name="family_learningLevelPss" type="string" indexed="true" stored="true" multiValued="true" />
+  <field name="family_learningSubjects" type="string" indexed="true" stored="true" multiValued="true" />
+  <field name="family_keyFeatureFeatureText" type="text_general" indexed="true" stored="true" multiValued="true" />
+  <field name="family_cPath" type="string" indexed="true" stored="true" />
+
+  <field name="family_title_search" type="text_general_engram" indexed="true" stored="true" multiValued="true"/>
+
+
+
 
   <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
 
@@ -214,6 +248,7 @@
   <dynamicField name="offerEndDate_*" type="string" indexed="true" stored="true"/>
 
   <dynamicField name="pubDate_*" type="date" indexed="true" stored="true"/>
+  <dynamicField name="preferredPubDate_*" type="date" indexed="true" stored="true"/>
   <dynamicField name="availabilityHuman_*" type="string" indexed="true" stored="true"/>
 
   <dynamicField name="discountCode_*" type="string" indexed="true" stored="true"/>
@@ -231,7 +266,7 @@
   <dynamicField name="formatPriceLegend_*" type="string" indexed="false" stored="true"/>
 
   <!-- calculated by logic within C5, re-calculated on every reindex -->
-  <dynamicField name="description_*" type="string" indexed="false" stored="true"/>
+  <dynamicField name="description_*" type="text_general" indexed="true" stored="true"/>
 </fields>
 
 
@@ -264,6 +299,9 @@
 
   //indexed for word level, case-insensitive searching. 
   <copyField source="title" dest="title_search"/>
+  <copyField source="eanTitle" dest="title_search"/>
+
+  <copyField source="family_title" dest="family_title_search"/>
 
   <copyField source="ean" dest="text"/>
   <copyField source="titleCode" dest="text"/> <!-- name this field -->
@@ -285,7 +323,7 @@
 
    <!-- copy name to alphaNameSort, a field designed for sorting by name -->
    <copyField source="title" dest="alphaTitleSort"/>
- 
+  
   <types>
     <!-- field type definitions. The "name" attribute is
        just a label to be used by field definitions.  The "class"
