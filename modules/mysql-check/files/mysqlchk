@@ -10,7 +10,7 @@ service mysqlchk
     user = nobody
     server = /usr/local/bin/clustercheck
     log_on_failure += USERID
-    only_from = 192.168.0.0/16 localhost
+    only_from = 192.168.0.0/16 10.10.0.0/16 localhost
     # recommended to put the IPs that need
     # to connect exclusively (security purposes)
     per_source = UNLIMITED
