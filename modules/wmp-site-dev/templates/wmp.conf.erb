@@ -4,7 +4,6 @@ ExtendedStatus On
     ServerAdmin sysadmin@cambridge.org
     DocumentRoot /data/httpd/wmp
     ServerName www.cambridge.org
-    ServerAlias wmpdev.cambridge.org
     ErrorLog /data/logs/httpd/wmp/wmp-error_log
     CustomLog /data/logs/httpd/wmp/wmp-access_log common
     AccessFileName WeDontUseHtaccess
@@ -26,7 +25,6 @@ ExtendedStatus On
         SetEnv WMP_MARKETING_DB_DATABASE cms_concrete_db2012
         SetEnv WMP_MARKETING_SITE_CACHE apc
         SetEnv WMP_MARKETING_SITE_EVENTS true
-        SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS Y
 	SetEnv IS_ADMIN_NODE <%= (admin_node ? "Y" : "N") %>
 	SetEnv ADMIN_NODE_URL http://admin.cambridge.org/dashboard/
 	SetEnv WMP_SITE_ADMIN_NAME 'Cambridge University Press'
@@ -56,8 +54,23 @@ ExtendedStatus On
         Order allow,deny
         Allow from all
         <IfModule mod_rewrite.c>
-            RewriteEngine On
-            RewriteRule ^((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1 [L]
+                RewriteEngine On
+                RewriteRule ^((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1 [L]
+                RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
+                #EXAMPLE WITH ACTIVE DIR_REL
+                #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /academic/$3 [L]
+                RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L]
+
+                #Breaks C5 Dashboard, force the removal of the CC.
+                RewriteCond %{REQUEST_URI} ^(.*)?([a-zA-Z]{2})\/(dashboard)(.*)?$
+                #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /learning/$3 [L,R=301]
+                RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L,R=301]
+
+                #Home links now go to url/xx/, this gets rid of xx/
+                RewriteCond %{REQUEST_URI} ^(.*)/([a-zA-Z]{2})/$
+                #RewriteRule ^(.*)$ /academic/ [L,R=301]
+                RewriteRule ^(.*)$ / [L,R=301]
+
             RewriteCond %{REQUEST_URI} !^/mod_pagespeed_[a-z_]+$
             RewriteCond %{REQUEST_FILENAME} !-f
             RewriteCond %{REQUEST_FILENAME}/index.html !-f
@@ -104,6 +117,12 @@ ExtendedStatus On
       </FilesMatch>
     </IfModule>
 
+    # Expires
+    ExpiresActive On
+    ExpiresByType image/gif A604800
+    ExpiresByType image/jpeg A604800
+    ExpiresByType image/png A604800
+    ExpiresByType image/tiff A604800
 
     # Additional mime types
     AddType video/mp4 .m4v
