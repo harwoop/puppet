@@ -96,9 +96,10 @@
       and back compatibility is not guaranteed.  Names with both leading and
       trailing underscores (e.g. _version_) are reserved.
    -->
-  <field name="ean" type="string" indexed="true" stored="true" />        
+  <field name="ean" type="string" indexed="true" stored="true" />
   <field name="titleCode" type="text_general" indexed="true" stored="true" />
   <field name="title" type="string" indexed="true" stored="true" />
+  <field name="title_lower" type="lowercase" indexed="true" stored="true" />
   <field name="subtitle" type="text_general" indexed="true" stored="true" />
   <field name="volumeNumber" type="string" indexed="true" stored="true" />
   <field name="volumeTitle" type="text_general" indexed="true" stored="true" />
@@ -154,7 +155,7 @@
   <field name="eanTitle" type="string" indexed="true" stored="true" />
 
   <field name="relatedTitles" type="text_general" indexed="true" stored="true" multiValued="true"/>
-  
+
   <field name="isCLC" type="boolean" indexed="true" stored="true" />
 
   <!-- so, Aus want their titles to be shown at the top searches. Because we dont want to do this for
@@ -164,7 +165,6 @@
 
   <!-- Y / N -->
   <field name="reference" type="string" indexed="true" stored="true" />
-
   <!-- I / X -->
   <field name="inspection" type="string" indexed="true" stored="true" />
   <field name="inspectionIsbn" type="string" indexed="true" stored="true" />
@@ -226,8 +226,6 @@
   <field name="family_title_search" type="text_general_engram" indexed="true" stored="true" multiValued="true"/>
 
 
-
-
   <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
 
   <dynamicField name="availabilityCode_*" type="string" indexed="true" stored="true"/>
@@ -238,7 +236,7 @@
   <dynamicField name="pubPriceEuroCirca_*" type="float" indexed="true" stored="true"/>
   <dynamicField name="pubPriceCanadaCirca_*" type="float" indexed="true" stored="true"/>
 
-  <dynamicField name="pubAndEbookPrice_*" type="float" indexed="true" stored="true"/> 
+  <dynamicField name="pubAndEbookPrice_*" type="float" indexed="true" stored="true"/>
 
   <dynamicField name="offerActive_*" type="string"  indexed="true"  stored="true"/>
   <dynamicField name="offerPubPrice_*" type="float"  indexed="true"  stored="true"/>
@@ -267,6 +265,7 @@
 
   <!-- calculated by logic within C5, re-calculated on every reindex -->
   <dynamicField name="description_*" type="text_general" indexed="true" stored="true"/>
+
 </fields>
 
 
@@ -297,7 +296,7 @@
   //indexed for extremely granular matching for autosuggest
   <copyField source="title" dest="suggest_text"/>
 
-  //indexed for word level, case-insensitive searching. 
+  //indexed for word level, case-insensitive searching.
   <copyField source="title" dest="title_search"/>
   <copyField source="eanTitle" dest="title_search"/>
 
@@ -306,6 +305,7 @@
   <copyField source="ean" dest="text"/>
   <copyField source="titleCode" dest="text"/> <!-- name this field -->
   <copyField source="title" dest="text"/>
+  <copyField source="title" dest="title_lower"/>
   <copyField source="subtitle" dest="text"/>
   <copyField source="volumeTitle" dest="text"/>
   <copyField source="partTitle" dest="text"/>
@@ -323,7 +323,7 @@
 
    <!-- copy name to alphaNameSort, a field designed for sorting by name -->
    <copyField source="title" dest="alphaTitleSort"/>
-  
+ 
   <types>
     <!-- field type definitions. The "name" attribute is
        just a label to be used by field definitions.  The "class"
