@@ -55,7 +55,7 @@ ExtendedStatus On
         Allow from all
         <IfModule mod_rewrite.c>
                 RewriteEngine On
-                RewriteRule ^((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1 [L]
+                RewriteRule ^(?:[a-zA-Z]{2}\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1 [L]
                 RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
                 #EXAMPLE WITH ACTIVE DIR_REL
                 #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /academic/$3 [L]
