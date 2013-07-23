@@ -225,6 +225,8 @@
 
   <field name="family_title_search" type="text_general_engram" indexed="true" stored="true" multiValued="true"/>
 
+  <!-- the total sibling isbns a title record has -->
+  <field name="totalTitleIsbns" type="int" indexed="true" stored="true"/>
 
   <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
 
