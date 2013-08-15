@@ -56,4 +56,10 @@ class solr-wmp ( $master = undef, $master_url = "http://nosql-master.aws.interna
     master => $master,
     master_url => $master_url
   }
+
+  solr-wmp::config {'resources':
+    core => "resources",
+    master => $master,
+    master_url => $master_url
+  }
 }
