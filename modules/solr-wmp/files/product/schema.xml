@@ -163,6 +163,10 @@
        allowing us to sort on this field first (before relevance) when we're in the aus locale only. -->
   <field name="aus_profitCentreSort" type="int" indexed="true" stored="true"/>
 
+
+  <field name="totalTitleIsbns" type="int" indexed="true" stored="true"/>
+  <field name="totalTitleCodes" type="int" indexed="true" stored="true"/>
+
   <!-- Y / N -->
   <field name="reference" type="string" indexed="true" stored="true" />
   <!-- I / X -->
@@ -182,10 +186,13 @@
 
   <field name="text" type="text_general" indexed="true" stored="false" multiValued="true" termVectors="true"/>
   <field name="alphaTitleSort" type="alphaOnlySort" indexed="true" stored="false"/>
+  <field name="alphaFamilyTitleSort" type="alphaOnlySort" indexed="true" stored="false"/>
 
   <field name="_version_" type="long" indexed="true" stored="true"/>
 
   <field name="suggest_text" type="text_auto" indexed="true" stored="true"/>
+  <field name="suggest_family_title" type="text_auto_title" indexed="true" stored="true"/>
+
   <field name="suggest" type="string" indexed="true" stored="true"/>
 
   <field name="title_search" type="text_general_engram" indexed="true" stored="true" multiValued="true"/>
@@ -200,12 +207,14 @@
        against the title level too. -->
 
   <field name="family_title" type="text_general" indexed="true" stored="true" />
+  <field name="family_title_raw" type="string" indexed="true" stored="true" />
   <field name="family_shortTitle" type="text_general" indexed="true" stored="true" />
   <field name="family_longDescription" type="text_general" indexed="true" stored="true" />
   <field name="family_shortDescription" type="text_general" indexed="true" stored="true" />
   <field name="family_subtitle" type="text_general" indexed="true" stored="true" />
-  <field name="family_editionNumber" type="text_general" indexed="true" stored="true" />
+  <field name="family_editionNumber" type="float" indexed="true" stored="true" />
   <field name="family_brandCode" type="text_general" indexed="true" stored="true" />
+  <field name="family_brandLegend" type="string" indexed="true" stored="true" />
   <field name="family_publicationTypeCode" type="text_general" indexed="true" stored="true" />
   <field name="family_onixTitleRuleCode" type="text_general" indexed="true" stored="true" />
   <field name="family_contactCode" type="text_general" indexed="true" stored="true" />
@@ -222,13 +231,20 @@
   <field name="family_learningSubjects" type="string" indexed="true" stored="true" multiValued="true" />
   <field name="family_keyFeatureFeatureText" type="text_general" indexed="true" stored="true" multiValued="true" />
   <field name="family_cPath" type="string" indexed="true" stored="true" />
+  <field name="family_exclusions" type="string" indexed="true" stored="true" multiValued="true" />
+  <field name="family_levelSortScore" type="int" indexed="true" stored="true" />
+  <field name="family_wwwCoverUrl" type="string" indexed="true" stored="true" />
+  <field name="family_contributors" type="text_general" indexed="true" stored="true" multiValued="true" />
+  <!-- sourced from the product_reviews package -->
+  <field name="family_averageRating" type="float" indexed="true" stored="true" />
+  <dynamicField name="family_pubDate_*" type="date" indexed="true" stored="true"/>
+
+  <field name="pubSysComponentLevel" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <field name="family_title_search" type="text_general_engram" indexed="true" stored="true" multiValued="true"/>
+  <field name="family_title_count" type="int" indexed="true" stored="true"/>
 
-  <!-- the total sibling isbns a title record has -->
-  <field name="totalTitleIsbns" type="int" indexed="true" stored="true"/>
-  
-  <field name="familyTitleCount" type="int" indexed="true" stored="true"/>
+  <field name="exclusions" type="string" indexed="true" stored="true" multiValued="true"/>
 
   <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
 
@@ -299,6 +315,8 @@
 
   //indexed for extremely granular matching for autosuggest
   <copyField source="title" dest="suggest_text"/>
+  <copyField source="family_title" dest="suggest_family_title"/>
+  <copyField source="family_title" dest="family_title_raw"/>
 
   //indexed for word level, case-insensitive searching.
   <copyField source="title" dest="title_search"/>
@@ -322,11 +340,13 @@
   <copyField source="isbn" dest="text"/>
   <copyField source="tags" dest="text"/>
   <copyField source="authors" dest="text"/>
+  <copyField source="formatLegend" dest="text"/>
 
   <copyField source="seriesLegend" dest="seriesSearchable"/>
 
    <!-- copy name to alphaNameSort, a field designed for sorting by name -->
    <copyField source="title" dest="alphaTitleSort"/>
+   <copyField source="family_title" dest="alphaFamilyTitleSort"/>
  
   <types>
     <!-- field type definitions. The "name" attribute is
@@ -461,16 +481,26 @@
     </fieldType>
     -->
 
+<fieldType class="solr.TextField" name="text_auto_title" positionIncrementGap="100">
+   <analyzer type="index">
+      <tokenizer class="solr.LowerCaseTokenizerFactory"/>
+      <filter class="solr.EdgeNGramFilterFactory" minGramSize="1" maxGramSize="15" side="front"/>
+   </analyzer>
+   <analyzer type="query">
+      <tokenizer class="solr.LowerCaseTokenizerFactory"/>
+   </analyzer>
+</fieldType>
+
 <fieldType class="solr.TextField" name="text_auto" positionIncrementGap="100">
  <analyzer type="index">
   <tokenizer class="solr.StandardTokenizerFactory"/>
-  <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="1"/>
+  <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="1" preserveOriginal="1"/>
   <filter class="solr.LowerCaseFilterFactory"/>
   <filter class="solr.EdgeNGramFilterFactory" maxGramSize="25" minGramSize="1"/>
  </analyzer>
   <analyzer type="query">
    <tokenizer class="solr.StandardTokenizerFactory"/>
-   <filter class="solr.WordDelimiterFilterFactory" generateWordParts="0" generateNumberParts="0" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="0"/>
+   <filter class="solr.WordDelimiterFilterFactory" generateWordParts="0" generateNumberParts="0" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="0" preserveOriginal="1"/>
    <filter class="solr.LowerCaseFilterFactory"/>
   </analyzer>
 </fieldType>
