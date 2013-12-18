@@ -208,6 +208,7 @@
 
   <field name="family_title" type="text_general" indexed="true" stored="true" />
   <field name="family_title_raw" type="string" indexed="true" stored="true" />
+  <field name="family_title_no_edition_number" type="text_general_engram" indexed="true" stored="true" />
   <field name="family_shortTitle" type="text_general" indexed="true" stored="true" />
   <field name="family_longDescription" type="text_general" indexed="true" stored="true" />
   <field name="family_shortDescription" type="text_general" indexed="true" stored="true" />
