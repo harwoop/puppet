@@ -104,6 +104,8 @@
   <field name="cDateModified" type="string" indexed="true" stored="true"/>
   <field name="cHandle" type="string" indexed="true" stored="true"/>
   <field name="cTitle" type="string" indexed="true" stored="true"/>
+  <!-- Alphabetical version of cTitle -->
+  <field name="alphaCTitle" type="alphaOnlySort" indexed="true" stored="true"/>
   <field name="cPath" type="string" indexed="true" stored="true"/>
   <field name="content" type="text_general_no_html" indexed="true" stored="true"/>
   <field name="subject" type="text_general" indexed="true" stored="true"/>
@@ -163,6 +165,9 @@
 
   //indexed for word level, case-insensitive searching.
   <copyField source="cTitle" dest="title_search"/>
+
+  //indexed for sorting titles
+  <copyField source="cTitle" dest="alphaCTitle"/>
 
  
   <types>
