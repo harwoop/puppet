@@ -48,10 +48,9 @@ ExtendedStatus On
         SetEnv WMP_API_ROOT_URL http://api.cambridge.org/
         SetEnv WMP_USE_MINIFICATION <%= (admin_node ? "N" : "Y") %>
         SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS <%= (admin_node ? "Y" : "N") %>
-<% if admin_node -%>
         SetEnv WMP_TRANSACTIONS_ALWAYS N
         SetEnv WMP_TRANSACTIONS_AUTO Y
-<% end -%>
+
 	SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
 
         Options Indexes FollowSymLinks
