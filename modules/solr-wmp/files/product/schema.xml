@@ -154,6 +154,9 @@
   <field name="authorsFull" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="eanTitle" type="string" indexed="true" stored="true" />
 
+  <!-- https://jira.cambridge.org/browse/WMPCEUSUK-1308-->
+  <field name="containedLegend" type="string" indexed="true" stored="true" />
+
   <field name="relatedTitles" type="text_general" indexed="true" stored="true" multiValued="true"/>
 
   <field name="isCLC" type="boolean" indexed="true" stored="true" />
@@ -228,6 +231,12 @@
   <field name="family_pubsysLanguageLevelCef" type="string" indexed="true" stored="true" />
   <field name="family_pubsysLanguageLevelCefFull" type="string" indexed="true" stored="true" multiValued="true" />
   <field name="family_pubSysComponentLevel" type="string" indexed="true" stored="true" />
+
+  <!-- https://jira.cambridge.org/browse/WMPCEUSUK-1278 -->
+  <field name="family_pubDate" type="date" indexed="true" stored="true" />
+
+  <field name="pubSysSortOrder" type="int" indexed="true" stored="true" />
+
   <field name="family_learningLevelPss" type="string" indexed="true" stored="true" multiValued="true" />
   <field name="family_learningSubjects" type="string" indexed="true" stored="true" multiValued="true" />
   <field name="family_keyFeatureFeatureText" type="text_general" indexed="true" stored="true" multiValued="true" />
