@@ -13,6 +13,13 @@ class php-wmp ($mysql_cache_enabled = true, $apc_cache_size = "128M") {
     source  => "puppet:///modules/php-wmp/php.ini",
   }
 
+  file { 'php.conf':
+    path    => '/etc/httpd/conf.d/php.conf',
+    ensure  => file,
+    require => Package['php'],
+    source  => "puppet:///modules/php-wmp/php.conf",
+  }
+
   package { 'php-mysqlnd':
     ensure  => installed,
     require => Package['php'],      
