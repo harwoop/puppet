@@ -15,6 +15,12 @@ ExtendedStatus On
         Allow from localhost 192.168.30. 192.168.31. 10.10.10. 10.10.11. 10.10.12. 131.111.154.
     </Location>
 
+    <Directory "/data/httpd/wmp/files/infra">
+        Order Deny,Allow
+        Deny from all
+        Allow from localhost 192.168.30. 192.168.31. 10.10.10. 10.10.11. 10.10.12. 131.111.154.
+    </Directory>
+
     <Directory "/data/httpd/wmp">
 	SetEnv WMP_MARKETING_SITE_BASE_URL http://<%= domain %>
 	SetEnv WMP_MARKETING_SITE_BASE_URL_SSL https://<%= domain %>
@@ -96,6 +102,22 @@ ExtendedStatus On
             # In case AddOutputFilterByType has been added
             SetEnv no-gzip
         </IfModule>
+    </Directory>
+
+    # Security - no peekee in these directories
+    <Directory  ~ "\.svn">
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+    
+    <Directory /data/httpd/wmp/tmp>
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
+    <Directory /data/httpd/wmp/cache>
+        Order Deny,Allow
+        Deny from all
     </Directory>
 
     <Directory /data/httpd/wmp/v2>
