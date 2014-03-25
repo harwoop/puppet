@@ -256,6 +256,9 @@
 
   <field name="exclusions" type="string" indexed="true" stored="true" multiValued="true"/>
 
+<!-- GAW 788 -->
+<field name="isReissue" type="string" indexed="true" stored="true"/>
+
   <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
 
   <dynamicField name="availabilityCode_*" type="string" indexed="true" stored="true"/>
@@ -296,6 +299,9 @@
   <!-- calculated by logic within C5, re-calculated on every reindex -->
   <dynamicField name="description_*" type="text_general" indexed="true" stored="true"/>
 
+  <!-- GAW 788 -->
+<dynamicField name="answerMonth_*" type="date" indexed="true" stored="true"/>
+<dynamicField name="answerMpubDate_unified_*" type="date" indexed="true" stored="true"/>
 </fields>
 
 
