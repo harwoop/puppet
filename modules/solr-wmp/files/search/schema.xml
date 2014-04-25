@@ -128,6 +128,8 @@
   <field name="spelling" type="textSpell" indexed="true" stored="true" multiValued="true"/>
 
   <field name="tags" type="text_general" indexed="true" stored="true" multiValued="true"/>
+
+  <field name="familyExclusions" type="text_general" indexed="true" stored="true" multiValued="true"/> 
 </fields>
 
 
