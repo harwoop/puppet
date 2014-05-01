@@ -1,31 +1,31 @@
 # == Class: wmp-site
 class mcollective-node {
   package { 'mcollective':
-    ensure  => installed,
+    ensure  => latest,
   } ~>
          
   package { 'mcollective-common':
-    ensure  => installed,
+    ensure  => latest,
   } ~>
          
   package { 'mcollective-nrpe-agent':
-    ensure  => installed,
+    ensure  => latest,
   } ~>
 
   package { 'mcollective-package-agent':
-    ensure  => installed,
+    ensure  => latest,
   } ~>
 
   package { 'mcollective-puppet-agent':
-    ensure  => installed,
+    ensure  => latest,
   } ~>
 
   package { 'mcollective-service-agent':
-    ensure  => installed,
+    ensure  => latest,
   } ~>
 
   package { 'rubygem-stomp':
-    ensure  => installed,
+    ensure  => latest,
   }
 
   service { 'mcollective':
