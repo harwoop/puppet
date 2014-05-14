@@ -5,3 +5,5 @@ class dynatrace-wsagent {
     ensure  => installed,
     require => Package['httpd'],
  }
+
+
