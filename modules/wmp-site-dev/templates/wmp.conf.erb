@@ -77,6 +77,7 @@ ExtendedStatus On
                 RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L,R=301]
 
                 #Home links now go to url/xx/, this gets rid of xx/
+                RewriteCond %{REQUEST_URI} !^(.*)/(dashboard)(.*)?$
                 RewriteCond %{REQUEST_URI} ^(.*)/([a-zA-Z]{2})/$
                 #RewriteRule ^(.*)$ /academic/ [L,R=301]
                 RewriteRule ^(.*)$ / [L,R=301]
