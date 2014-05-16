@@ -1,5 +1,5 @@
-# == Class: dynatrace_wsagent
-class dynatrace_wsagent {
+# == Class: dynatrace-wsagent
+class dynatrace-wsagent {
 
   package { 'cup-dynatrace-wsagent':
     ensure  => installed,
