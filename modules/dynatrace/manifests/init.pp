@@ -1,7 +1,7 @@
 # == Class: dynatrace_wsagent
-class dynatrace-wsagent {
+class dynatrace_wsagent {
 
-  package { 'cup-dynatrace_wsagent':
+  package { 'cup-dynatrace-wsagent':
     ensure  => installed,
     require => Package['httpd'],
  }
