@@ -103,6 +103,10 @@
   <field name="familyId" type="string" indexed="true" stored="true"/>
   <field name="familyIds" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="fileDisplayName" type="text_general" indexed="true" stored="true"/>
+
+  <!-- https://jira.cambridge.org/browse/WMPCEH-131 -->
+  <field name="fileDisplayNameSort" type="text_general" indexed="true" stored="true"/>
+
   <field name="url" type="string" indexed="true" stored="true"/>
   <field name="formatTag" type="string" indexed="true" stored="true"/>
   <field name="languageLevel" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -151,8 +155,12 @@
         or to add multiple fields to the same field for easier/faster searching.  -->
 
 
-  <copyField source="fileDisplayName" dest="alphaTitleSort"/>
+  <!-- Disabled sorting on the standard file display name, this does not allow correct sorting for filenames that contain numbers -->
+  <!-- <copyField source="fileDisplayName" dest="alphaTitleSort"/> -->
 
+  <!-- https://jira.cambridge.org/browse/WMPCEH-131 -->
+  <!-- This is an additional field that is populated each time a file is re-indexed. It is not visible to the end user, it is just used for sorting data -->
+  <copyField source="fileDisplayNameSort" dest="alphaTitleSort"/>
 
   <types>
     <!-- field type definitions. The "name" attribute is
@@ -511,9 +519,11 @@
              
              http://java.sun.com/j2se/1.6.0/docs/api/java/util/regex/package-summary.html
           -->
-        <filter class="solr.PatternReplaceFilterFactory"
+        <!-- https://jira.cambridge.org/browse/WMPCEH-131 -->
+        <!-- Disabled this filter, was causing the sort to ignore numeric characters -->
+        <!--<filter class="solr.PatternReplaceFilterFactory"
                 pattern="([^a-z])" replacement="" replace="all"
-        />
+        />-->
       </analyzer>
     </fieldType>
     
