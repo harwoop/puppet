@@ -10,7 +10,7 @@ class dynatrace-wsagent {
     path    => '/etc/php.d/dynatrace.ini',
     ensure  => file,
     require => Package['cup-dynatrace-wsagent'],
-    source  => "puppet:///modules/dynatrace/dynatrace.ini",
+    source  => "puppet:///modules/dynatrace-wsagent/dynatrace.ini",
   }
 
 }
