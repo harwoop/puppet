@@ -81,7 +81,7 @@ select date_format(DateAdded, '%d/%m/%Y')as dateadded, title, first_name, last_n
 		WHERE ak.akHandle IN ('country') AND akc.akCategoryHandle = 'user'
 	) as h on h.userIDC = c.uIDc
 	LEFT JOIN Users u on u.uID = c.uIDc
-) as d 
+) as d
 QUERYEND
 
 # Connect and execute query
@@ -92,7 +92,7 @@ $mysql_sth->execute();
 
 # Create a temporary CSV file
 my ($fh, $filename) = tempfile("reportXXXXXXXXX", UNLINK => 1);
-print $fh '"uDateAdded", "title","first_name","last_name","uEmail", "job_title","institution","country_code","subjects"', "\n";
+print $fh '"dateadded","title","first_name","last_name","uEmail","job_title","institution","country_code","subjects"', "\n";
 while (my @row = $mysql_sth->fetchrow_array()) {
    print $fh  join(',', map {qq("$_")} @row), "\n";
 }
