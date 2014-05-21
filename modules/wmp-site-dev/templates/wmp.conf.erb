@@ -121,6 +121,11 @@ ExtendedStatus On
         Deny from all
     </Directory>
 
+    <Directory /data/httpd/wmp/support>
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
     <Directory /data/httpd/wmp/v2>
         AuthName Title
         AuthUserFile /data/httpd/nonexistant
