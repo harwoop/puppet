@@ -12,7 +12,7 @@ my $db_username = "wmp_backup";
 my $db_password = "yaeHo3AikiNg4ohtoo2o";
 my $sender = 'noreply@cambridge.org';
 my $recipient = 'rdwood@cambridge.org';
-my $cc = 'iwebb@cambridge.org,cxandrews@cambridge.org';
+my $cc = 'cvenditti@cambridge.org,cxandrews@cambridge.org, adudman@cambridge.org';
 
 my $query = <<QUERYEND;
 select date_format(DateAdded, '%d/%m/%Y')as dateadded, title, first_name, last_name, uEmail, job_title, institution, country_code, subjects from 
