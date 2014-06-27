@@ -42,12 +42,12 @@ start() {
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
-    /usr/local/bin/rr-update.sh add > /dev/null
+##    /usr/local/bin/rr-update.sh add > /dev/null
     return $retval
 }
 
 stop() {
-    /usr/local/bin/rr-update.sh remove > /dev/null
+##    /usr/local/bin/rr-update.sh remove > /dev/null
     echo -n $"Stopping $prog: "
     killproc $prog
     retval=$?
