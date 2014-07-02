@@ -18,6 +18,13 @@ class wmp-db-reports {
     source => "puppet:///modules/wmp-db-reports/alerts_report_weekly",
   } ~>
 
+  file { 'librarians_report_monthly':
+    path   => '/usr/local/bin/librarians_report_monthly',
+    ensure => present,
+    mode   => 700,
+    source => "puppet:///modules/wmp-db-reports/librarians_report_monthly",
+  } ~>
+
   cron { 'alerts_report_daily':
     command => '/usr/local/bin/alerts_report_daily > /dev/null 2>&1',
     user    => root,
@@ -32,6 +39,13 @@ class wmp-db-reports {
     hour    => 3,
     minute  => 30,
     weekday => 6,
-  }
+  } ~>
 
+  cron { 'librarians_report_monthly':
+    command => '/usr/local/bin/librarians_report_monthly > /dev/null 2>&1',
+    user    => root,
+    hour    => 1,
+    minute  => 0,
+    monthday => 1,
+  }
 }
