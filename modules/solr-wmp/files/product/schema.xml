@@ -153,6 +153,8 @@
   <!-- This field will hold the authors in the right sequence based on the full authors relation in the API -->
   <field name="authorsFull" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="eanTitle" type="string" indexed="true" stored="true" />
+  <field name="authorForename" type="alphaOnlySort" indexed="true" stored="true" sortMissingLast="true"/>
+  <field name="authorSurname" type="alphaOnlySort" indexed="true" stored="true" sortMissingLast="true"/>
 
   <!-- https://jira.cambridge.org/browse/WMPCEUSUK-1308-->
   <field name="containedLegend" type="string" indexed="true" stored="true" />
