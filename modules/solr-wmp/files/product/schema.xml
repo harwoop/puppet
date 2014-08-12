@@ -269,6 +269,7 @@
   <dynamicField name="pubPriceNzd_*" type="float" indexed="true" stored="true"/>
   <dynamicField name="pubPriceNzdCirca_*" type="float" indexed="true" stored="true"/>
   <dynamicField name="pubPriceEuroCirca_*" type="float" indexed="true" stored="true"/>
+  <dynamicField name="pubPriceCanada_*" type="float" indexed="true" stored="true"/>
   <dynamicField name="pubPriceCanadaCirca_*" type="float" indexed="true" stored="true"/>
 
   <dynamicField name="pubAndEbookPrice_*" type="float" indexed="true" stored="true"/>
