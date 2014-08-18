@@ -1,5 +1,5 @@
 # == Class: wmp-site
-class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $domain = "www.cambridge.org", $admin_node = false, $disable_ecommerce = false ) {
+class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "localhost", $domain = "www.cambridge.org", $admin_node = false, $disable_ecommerce = false ) {
   include wmp-dirs
 
   package { 'subversion':
