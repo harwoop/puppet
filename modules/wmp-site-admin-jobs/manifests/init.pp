@@ -14,4 +14,18 @@ class wmp-site-admin-jobs {
     minute  => 25,
   }
 
+  file { 'full_import.sh':
+    path   => '/usr/local/bin/full_import.sh',
+    ensure => present,
+    mode   => 755,
+    source => "puppet:///modules/wmp-site-admin-jobs/full_import.sh",
+  } ~>
+
+  cron { 'full_import_cron':
+    command => '/usr/local/bin/full_import.sh > /dev/null 2>&1',
+    user    => root,
+    weekday => 6,
+    hour    => 15,
+    minute  => 00,
+  }
 }
