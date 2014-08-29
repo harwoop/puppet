@@ -9,7 +9,7 @@ echo "---- Full Import of Families and Titles ----" >> $LOG
 for j in $JOBS
 do
   echo "$URL$j&since=''" >> $LOG
-  /usr/bin/curl -sS $URL$j >> $LOG
+  /usr/bin/curl -sS "$URL$j&since=''" >> $LOG
   echo >> $LOG
 done
 
