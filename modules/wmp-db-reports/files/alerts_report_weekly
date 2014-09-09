@@ -15,72 +15,60 @@ my $recipient = 'rdwood@cambridge.org';
 my $cc = 'vsharland@cambridge.org, vpickett@cambridge.org, cvenditti@cambridge.org, lramos@cambridge.org, madlawan@cambridge.org, adudman@cambridge.org';
 
 my $query = <<QUERYEND;
-select date_format(DateAdded, '%d/%m/%Y')as dateadded, title, first_name, last_name, uEmail, job_title, institution, country_code, subjects from 
-	(select * from (
-		SELECT ak.akID, uav.uID as uIDc, uav.avID, atdb.value as subjects,atv.avDateAdded as DateAdded
-		FROM AttributeKeys ak
-		INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
-		LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
-		LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
-		LEFT JOIN AttributeValues atv ON atv.avID = atdb.avID
-		WHERE ak.akHandle IN ('alerts_subjects') AND akc.akCategoryHandle = 'user'
-		AND atv.avDateAdded>DATE(DATE_SUB(NOW(), INTERVAL 1 WEEK))
-		ORDER BY DateAdded ASC
-	) as c 
-	LEFT JOIN (
-		SELECT /*ak.akID as akakID, uav.uID as uavID , uav.avID as b, */ uav.uID as uavID3 , atdb.value as first_name
-		FROM AttributeKeys ak 
-		INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
-		LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
-		LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
-		WHERE ak.akHandle IN ('first_name')
-		AND akc.akCategoryHandle = 'user'
-	) as b on b.uavID3 = c.uIDc
-	LEFT JOIN (
-		SELECT /*ak.akID as akakID, uav.uID as uavID , uav.avID as b, */ uav.uID as uavID , atdb.value as last_name
-		FROM AttributeKeys ak
-		INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
-		LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
-		LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
-		WHERE ak.akHandle IN ('last_name')
-		AND akc.akCategoryHandle = 'user'
-	) as d on d.uavID = c.uIDc
-	LEFT JOIN (
-		SELECT /*ak.akID as akakID, uav.uID as uavID , uav.avID as b, */ uav.uID as uavID1 , atdb.value as institution
-		FROM AttributeKeys ak
-		INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
-		LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
-		LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
-		WHERE ak.akHandle IN ('institution_affiliation') 
-		AND akc.akCategoryHandle = 'user'
-	) as e on e.uavID1 = c.uIDc
-	LEFT JOIN (
-		SELECT ats.value as job_title, uav.uID as userID1
-		FROM AttributeKeys ak
-		INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
-		LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
-		LEFT JOIN atSelectOptionsSelected atss ON uav.avID = atss.avID
-		LEFT JOIN atSelectOptions ats ON atss.atSelectOptionID = ats.ID
-		WHERE ak.akHandle IN ('job_title') AND akc.akCategoryHandle = 'user'
-	) as f on userID1 = c.uIDc
-	LEFT JOIN (
-		SELECT ats.value as title, uav.uID as userID, uav.avID as uavID2
-		FROM AttributeKeys ak
-		INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
-		LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
-		LEFT JOIN atSelectOptionsSelected atss ON uav.avID = atss.avID
-		LEFT JOIN atSelectOptions ats ON atss.atSelectOptionID = ats.ID
-		WHERE ak.akHandle IN ('title') AND akc.akCategoryHandle = 'user'
-	) as g on g.userID = c.uIDc
-	LEFT JOIN (
-		SELECT atdb.value as country_code, uav.uID as userIDC
-		FROM AttributeKeys ak
-		INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
-		LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
-		LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
-		WHERE ak.akHandle IN ('country') AND akc.akCategoryHandle = 'user'
-	) as h on h.userIDC = c.uIDc
-	LEFT JOIN Users u on u.uID = c.uIDc
+select date_format(DateAdded, '%d/%m/%Y')as dateadded, title, first_name, last_name, uEmail as email, job_title, affiliation as institution, country_code as country, subjects, journals from 
+(   select * from (
+        SELECT  aa.date_subscribed as DateAdded, aa.job_title as job_title, aa.affiliation as affiliation, aa.email as email, aa.subjects as subjects, aa.journals as journals
+        FROM academic_alerts aa
+        WHERE aa.date_subscribed > DATE(DATE_SUB(NOW(), INTERVAL 1 WEEK))
+        AND aa.subjects != "Libalerts"
+        ORDER BY aa.date_subscribed ASC
+    ) as a
+    LEFT JOIN Users u on u.uEmail = a.email
+    LEFT JOIN (
+        SELECT ak.akID, uav.uID as uIDc, uav.avID
+        FROM AttributeKeys ak
+        INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
+        LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
+        LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
+        LEFT JOIN AttributeValues atv ON atv.avID = atdb.avID
+        WHERE ak.akHandle IN ('alerts_subscriber') AND akc.akCategoryHandle = 'user'
+    ) as c on u.uID = c.uIDc
+    LEFT JOIN (
+        SELECT uav.uID as uavID3 , atdb.value as first_name
+        FROM AttributeKeys ak 
+        INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
+        LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
+        LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
+        WHERE ak.akHandle IN ('first_name')
+        AND akc.akCategoryHandle = 'user'
+    ) as b on b.uavID3 = c.uIDc
+    LEFT JOIN (
+        SELECT uav.uID as uavID , atdb.value as last_name
+        FROM AttributeKeys ak
+        INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
+        LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
+        LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
+        WHERE ak.akHandle IN ('last_name')
+        AND akc.akCategoryHandle = 'user'
+    ) as d on d.uavID = c.uIDc
+    LEFT JOIN (
+        SELECT ats.value as title, uav.uID as userID, uav.avID as uavID2
+        FROM AttributeKeys ak
+        INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
+        LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
+        LEFT JOIN atSelectOptionsSelected atss ON uav.avID = atss.avID
+        LEFT JOIN atSelectOptions ats ON atss.atSelectOptionID = ats.ID
+        WHERE ak.akHandle IN ('title') AND akc.akCategoryHandle = 'user'
+    ) as g on g.userID = c.uIDc
+    LEFT JOIN (
+        SELECT atdb.value as country_code, uav.uID as userIDC
+        FROM AttributeKeys ak
+        INNER JOIN AttributeKeyCategories akc ON ak.akCategoryID = akc.akCategoryID
+        LEFT JOIN UserAttributeValues uav ON uav.akID = ak.akID
+        LEFT JOIN atDefault atdb ON uav.avID = atdb.avID
+        WHERE ak.akHandle IN ('country') AND akc.akCategoryHandle = 'user'
+    ) as h on h.userIDC = c.uIDc
+    
 ) as d
 QUERYEND
 
