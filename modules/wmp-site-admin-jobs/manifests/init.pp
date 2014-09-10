@@ -10,8 +10,8 @@ class wmp-site-admin-jobs {
   cron { 'update_jobs_cron':
     command => '/usr/local/bin/update_jobs.sh > /dev/null 2>&1',
     user    => root,
-    hour    => 4,
-    minute  => 25,
+    hour    => 10,
+    minute  => 00,
   }
 
   file { 'full_import.sh':
