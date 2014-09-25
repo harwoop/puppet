@@ -24,7 +24,7 @@ ExtendedStatus On
     <Directory "/data/httpd/wmp">
 	SetEnv WMP_MARKETING_SITE_BASE_URL http://<%= domain %>
 	SetEnv WMP_MARKETING_SITE_BASE_URL_SSL https://<%= domain %>
-        SetEnv WMP_MARKETING_SITE_DIR_REL 
+        SetEnv WMP_MARKETING_SITE_DIR_REL
         SetEnv WMP_MARKETING_DB_SERVER <%= mysql %>
         SetEnv WMP_MARKETING_DB_USERNAME concrete_usr2012
         SetEnv WMP_MARKETING_DB_PASSWORD k3ey!Bo0rd&
@@ -46,7 +46,7 @@ ExtendedStatus On
         SetEnv WMP_SOLR_MASTER_PORT 8080
         SetEnv WMP_SOLR_INDEX wmp
         SetEnv WMP_SOLR_INDEX_PATH /wmp/
-        SetEnv WMP_MONGO_MASTER <%= nosql_master %> 
+        SetEnv WMP_MONGO_MASTER <%= nosql_master %>
         SetEnv WMP_MONGO_MASTER_PORT 27017
         SetEnv WMP_MONGO_SERVER <%= nosql_slave %>
         SetEnv WMP_MONGO_PORT 27017
@@ -59,13 +59,15 @@ ExtendedStatus On
 
 	SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
 
+    SetEnv LIVE_NODE Y
+
         Options Indexes FollowSymLinks
         AllowOverride None
         Order allow,deny
         Allow from all
         <IfModule mod_rewrite.c>
                 RewriteEngine On
-                RewriteRule ^(?:[a-zA-Z]{2}\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1 [L]
+                RewriteRule ^(?:[a-zA-Z]{2}\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1&%{QUERY_STRING} [NC,L]
                 RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
                 #EXAMPLE WITH ACTIVE DIR_REL
                 #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /academic/$3 [L]
@@ -110,7 +112,7 @@ ExtendedStatus On
         Order Deny,Allow
         Deny from all
     </Directory>
-    
+
     <Directory /data/httpd/wmp/tmp>
         Order Deny,Allow
         Deny from all
@@ -129,7 +131,7 @@ ExtendedStatus On
     <Directory /data/httpd/wmp/v2>
         AuthName Title
         AuthUserFile /data/httpd/nonexistant
-        Require valid-user 
+        Require valid-user
     </Directory>
 
     <Directory /data/httpd/wmp/concrete/libraries/3rdparty/securimage/database>
