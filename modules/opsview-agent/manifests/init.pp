@@ -31,4 +31,14 @@ class opsview-agent {
     require => Package['opsview-agent'],
   }
 
+  file { 'check_puppet_agent':
+    path => '/usr/local/nagios/libexec/check_puppet_agent',
+    ensure => file,
+    owner => "nagios",
+    group => "nagios",
+    mode => 770,
+    source => 'puppet:///modules/opsview-agent/check_puppet_agent',
+    require => Package['opsview-agent'],
+  }
+
 }
