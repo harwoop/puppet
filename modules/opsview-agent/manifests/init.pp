@@ -21,6 +21,16 @@ class opsview-agent {
     require => Package['opsview-agent'],
   }
 
+  file { 'nagios_sudo':
+    path => '/etc/sudoers.d/nagios_sudo',
+    ensure => file,
+    owner => "root",
+    group => "root",
+    mode => 400,
+    source => 'puppet:///modules/opsview-agent/nagios_sudo',
+    require => Package['opsview-agent'],
+  }
+
   file { 'check_gluster.pl':
     path => '/usr/local/nagios/libexec/check_gluster.pl',
     ensure => file,

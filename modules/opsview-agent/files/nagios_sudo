@@ -1,0 +1,4 @@
+# Managed by Puppet! Do not edit locally.
+#
+
+nagios ALL=NOPASSWD: ALL
