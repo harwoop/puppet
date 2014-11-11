@@ -56,6 +56,8 @@ ExtendedStatus On
         SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS <%= (admin_node ? "Y" : "N") %>
         SetEnv WMP_TRANSACTIONS_ALWAYS N
         SetEnv WMP_TRANSACTIONS_AUTO Y
+        SetEnv WMP_API_KEY $2a$12$hG0PSzLZgkcEe6354YmjpuQ25Vt90mp3K.qH52LD7zE8nrlYpPtNO
+        SetEnv WMP_MONGO_CLUSTER nosql.eu.aws.cambridge.org:27017,web1.eu.aws.cambridge.org:27017,web2.eu.aws.cambridge.org:27017,web3.eu.aws.cambridge.org:27017
 
 	SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
 
