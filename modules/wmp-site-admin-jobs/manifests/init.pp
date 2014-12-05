@@ -23,6 +23,7 @@ class wmp-site-admin-jobs {
 
   cron { 'full_import_cron':
     command => '/usr/local/bin/full_import.sh > /dev/null 2>&1',
+    ensure  => absent,
     user    => root,
     weekday => 6,
     hour    => 15,
