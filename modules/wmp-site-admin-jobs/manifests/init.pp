@@ -12,6 +12,9 @@ class wmp-site-admin-jobs {
     user    => root,
     hour    => 10,
     minute  => 00,
+    month => absent,
+    monthday => absent,
+    weekday => absent,
   }
 
   file { 'full_import.sh':
@@ -28,5 +31,7 @@ class wmp-site-admin-jobs {
     weekday => 6,
     hour    => 15,
     minute  => 00,
+    month => absent,
+    monthday => absent,
   }
 }
