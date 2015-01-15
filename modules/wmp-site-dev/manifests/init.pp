@@ -6,6 +6,10 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     ensure  => installed,
   } 
 
+  package { 'php-soap':
+    ensure  => installed,
+  } 
+
   package { 'cup-wmp-site':
     ensure  => installed,
     require => Package['httpd'],
