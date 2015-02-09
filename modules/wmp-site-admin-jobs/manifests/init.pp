@@ -9,6 +9,7 @@ class wmp-site-admin-jobs {
 
   cron { 'update_jobs_cron':
     command => '/usr/local/bin/update_jobs.sh > /dev/null 2>&1',
+    ensure  => absent,
     user    => root,
     hour    => 10,
     minute  => 00,
@@ -26,6 +27,7 @@ class wmp-site-admin-jobs {
 
   cron { 'full_import_cron':
     command => '/usr/local/bin/full_import.sh > /dev/null 2>&1',
+    ensure  => absent,
     user    => root,
     weekday => 6,
     hour    => 15,
