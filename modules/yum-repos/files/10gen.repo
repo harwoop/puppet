@@ -3,4 +3,4 @@ name=10gen Repository
 baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64
 priority=5
 gpgcheck=0
-enabled=1
+enabled=0
