@@ -45,6 +45,11 @@ class php-wmp ($mysql_cache_enabled = true, $apc_cache_size = "128M") {
     require => Package['php'],
   }
 
+  package { 'php-mcrypt':
+    ensure  => installed,
+    require => Package['php'],
+  }
+
   file { 'apc.ini':
     path    => '/etc/php.d/apc.ini',
     ensure  => file,
