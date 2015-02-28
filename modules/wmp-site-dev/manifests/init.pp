@@ -46,4 +46,29 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     notify  => Service['httpd'],
   }
 
+  user { 'maniladev':
+    ensure => present,
+    gid => 'maniladev',
+    home => '/home/maniladev',
+  }
+
+  file { 'maniladev-ssh':
+    path => '/home/maniladev/.ssh',
+    ensure => directory,
+    owner => 'maniladev',
+    group => 'maniladev',
+    mode => '0700',
+    require => User['maniladev'],
+  }
+
+  file { 'maniladev-ssh-key':
+    path => '/home/maniladev/.ssh/authorized_keys',
+    ensure => file,
+    owner => 'maniladev',
+    group => 'maniladev',
+    mode => '0600',
+    content => template("wmp-site-dev/authorized_keys.erb"),
+    require => File['maniladev-ssh'],
+  }
+
 }
