@@ -60,13 +60,22 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     require => Group['maniladevgrp'],
   }
 
+  file { 'maniladev-home':
+    path => '/home/maniladev',
+    ensure => directory,
+    owner => 'maniladev',
+    group => 'maniladev',
+    mode => '0755',
+    require => User['maniladev'],
+  }
+
   file { 'maniladev-ssh':
     path => '/home/maniladev/.ssh',
     ensure => directory,
     owner => 'maniladev',
     group => 'maniladev',
     mode => '0700',
-    require => User['maniladev'],
+    require => File['maniladev-home'],
   }
 
   file { 'maniladev-ssh-key':
