@@ -46,7 +46,7 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     notify  => Service['httpd'],
   }
 
-  group ( 'maniladevgrp':
+  group { 'maniladevgrp':
     name => 'maniladev',
     gid => '501',
     ensure => present,
