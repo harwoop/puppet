@@ -46,10 +46,18 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     notify  => Service['httpd'],
   }
 
+  group ( 'maniladevgrp':
+    name => 'maniladev',
+    gid => '501',
+    ensure => present,
+  }
+
   user { 'maniladev':
     ensure => present,
+    uid => '500',
     gid => 'maniladev',
     home => '/home/maniladev',
+    require => Group['maniladevgrp'],
   }
 
   file { 'maniladev-ssh':
