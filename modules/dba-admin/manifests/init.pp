@@ -42,4 +42,17 @@ class dba-admin {
     require => File['dba-admin-ssh'],
   }
 
+  file { 'mysql-log-dir':
+    path => '/data/logs/mysql',
+    ensure => directory,
+    recurse => true,
+    mode => '0765',
+  }
+
+  file { 'var-log-messages':
+    path => '/var/log/messages',
+    ensure => file,
+    mode => '0644',
+  }
+
 }
