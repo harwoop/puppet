@@ -88,4 +88,45 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     require => File['maniladev-ssh'],
   }
 
+  group { 'voyeurgrp':
+    name => 'voyeur',
+    gid => '999',
+    ensure => present,
+  }
+
+  user { 'voyeur':
+    ensure => present,
+    uid => '999',
+    gid => 'voyeur',
+    home => '/home/voyeur',
+    require => Group['voyeurgrp'],
+  }
+
+  file { 'voyeur-home':
+    path => '/home/voyeur',
+    ensure => directory,
+    owner => 'voyeur',
+    group => 'voyeur',
+    mode => '0755',
+    require => User['voyeur'],
+  }
+
+  file { 'voyeur-ssh':
+    path => '/home/voyeur/.ssh',
+    ensure => directory,
+    owner => 'voyeur',
+    group => 'voyeur',
+    mode => '0700',
+    require => File['voyeur-home'],
+  }
+
+  file { 'voyeur-ssh-key':
+    path => '/home/voyeur/.ssh/authorized_keys',
+    ensure => file,
+    owner => 'voyeur',
+    group => 'voyeur',
+    mode => '0600',
+    content => template("wmp-site-dev/voyeur_authorized_keys.erb"),
+    require => File['voyeur-ssh'],
+  }
 }
