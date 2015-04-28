@@ -11,7 +11,7 @@ class wmp-site-admin-jobs {
     command => '/usr/local/bin/update_jobs.sh > /dev/null 2>&1',
     ensure  => present,
     user    => root,
-    hour    => 10,
+    hour    => 16,
     minute  => 00,
     month => absent,
     monthday => absent,
