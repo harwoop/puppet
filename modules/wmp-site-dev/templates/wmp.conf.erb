@@ -77,7 +77,7 @@ ExtendedStatus On
                 RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
                 RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
 
-                RewriteCond % {QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+                RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
                 RewriteRule ^([a-zA-Z]{2}\/)?knowledge\/discountpromotion\/?$ /wm-ecommerce-web/academic/landingPage/%1? [R=301,L]
 	
                 RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
