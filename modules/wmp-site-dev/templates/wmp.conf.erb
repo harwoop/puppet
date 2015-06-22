@@ -26,8 +26,8 @@ ExtendedStatus On
     JKMount /wm-ecommerce-web/* localtomcat
 
     <Directory "/data/httpd/wmp">
-	SetEnv WMP_MARKETING_SITE_BASE_URL http://<%= domain %>
-	SetEnv WMP_MARKETING_SITE_BASE_URL_SSL https://<%= domain %>
+        SetEnv WMP_MARKETING_SITE_BASE_URL http://<%= domain %>
+        SetEnv WMP_MARKETING_SITE_BASE_URL_SSL https://<%= domain %>
         SetEnv WMP_MARKETING_SITE_DIR_REL
         SetEnv WMP_MARKETING_DB_SERVER <%= mysql %>
         SetEnv WMP_MARKETING_DB_USERNAME concrete_usr2012
@@ -35,15 +35,15 @@ ExtendedStatus On
         SetEnv WMP_MARKETING_DB_DATABASE cms_concrete_db2012
         SetEnv WMP_MARKETING_SITE_CACHE apc
         SetEnv WMP_MARKETING_SITE_EVENTS true
-	SetEnv IS_ADMIN_NODE <%= (admin_node ? "Y" : "N") %>
-	SetEnv ADMIN_NODE_URL http://admin.cambridge.org/dashboard/
-	SetEnv WMP_SITE_ADMIN_NAME 'Cambridge University Press'
-	SetEnv WMP_SITE_ADMIN_EMAIL concrete5@cambridge.org
-	SetEnv WMP_API_USERNAME concrete5@cambridge.org
-	SetEnv WMP_API_PASSWORD 4RagEsw+g!spU*u
-	SetEnv WMP_VYRE_BASE_URL //<%= domain %>
-	SetEnv WMP_IIS_BASE_URL http://<%= domain %>
-	SetEnv WMP_SALESFORCE_BASE_URL http://cambridge.force.com
+        SetEnv IS_ADMIN_NODE <%= (admin_node ? "Y" : "N") %>
+        SetEnv ADMIN_NODE_URL http://admin.cambridge.org/dashboard/
+        SetEnv WMP_SITE_ADMIN_NAME 'Cambridge University Press'
+        SetEnv WMP_SITE_ADMIN_EMAIL concrete5@cambridge.org
+        SetEnv WMP_API_USERNAME concrete5@cambridge.org
+        SetEnv WMP_API_PASSWORD 4RagEsw+g!spU*u
+        SetEnv WMP_VYRE_BASE_URL //<%= domain %>
+        SetEnv WMP_IIS_BASE_URL http://<%= domain %>
+        SetEnv WMP_SALESFORCE_BASE_URL http://cambridge.force.com
         SetEnv WMP_SOLR_SERVER localhost
         SetEnv WMP_SOLR_PORT 8080
         SetEnv WMP_SOLR_MASTER <%= nosql_master %>
@@ -63,7 +63,7 @@ ExtendedStatus On
         SetEnv WMP_API_KEY $2a$12$hG0PSzLZgkcEe6354YmjpuQ25Vt90mp3K.qH52LD7zE8nrlYpPtNO
         SetEnv WMP_MONGO_CLUSTER nosql.eu.aws.cambridge.org:27017,web1.eu.aws.cambridge.org:27017,web2.eu.aws.cambridge.org:27017,web3.eu.aws.cambridge.org:27017
 
-	SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
+        SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
 
     SetEnv LIVE_NODE Y
 
@@ -76,6 +76,12 @@ ExtendedStatus On
 
                 RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
                 RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
+
+                RewriteCond % {QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+                RewriteRule ^([a-zA-Z]{2}\/)?knowledge\/discountpromotion\/?$ /wm-ecommerce-web/academic/landingPage/%1? [R=301,L]
+	
+                RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+                RewriteRule ^([a-zA-Z]{2}\/)?elt\/discountpromotion\/?$ /wm-ecommerce-web/english/landingPage/%1? [R=301,L]
 
                 RewriteRule ^(?:[a-zA-Z]{2}\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1&%{QUERY_STRING} [NC,L]
                 RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
