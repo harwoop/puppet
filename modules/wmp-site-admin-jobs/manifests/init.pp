@@ -28,7 +28,7 @@ class wmp-site-admin-jobs {
   file { 'monthly_reports.sh':
     path   => '/usr/local/bin/monthly_reports.sh',
     ensure => present,
-    mode   => 755,
+    mode   => 750,
     source => "puppet:///modules/wmp-site-admin-jobs/monthly_reports.sh",
   } ~>
 
