@@ -25,6 +25,24 @@ class wmp-site-admin-jobs {
     source => "puppet:///modules/wmp-site-admin-jobs/full_import.sh",
   } ~>
 
+  file { 'monthly_reports.sh':
+    path   => '/usr/local/bin/monthly_reports.sh',
+    ensure => present,
+    mode   => 755,
+    source => "puppet:///modules/wmp-site-admin-jobs/monthly_reports.sh",
+  } ~>
+
+  cron { 'monthly_reports':
+    command => '/usr/local/bin/monthly_reports.sh > /dev/null 2>&1',
+    ensure  => present,
+    user    => root,
+    weekday => absent,
+    hour    => 03,
+    minute  => 00,
+    month => absent,
+    monthday => 01,
+  }
+
   cron { 'full_import_cron':
     command => '/usr/local/bin/full_import.sh > /dev/null 2>&1',
     ensure  => absent,
