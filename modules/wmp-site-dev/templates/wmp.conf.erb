@@ -66,7 +66,7 @@ ExtendedStatus On
         SetEnv KK_WEBSERVICE_USER quartzAdmin@cambridge.org
         SetEnv KK_WEBSERVICE_PASSWORD f$>!}huKtY4!hE3U
         SetEnv KK_WEBSERVICE https://ecommerce-admin.cambridge.org/konakartadmin/services/KKWSAdmin?wsdl
-        SetEnv KK_WEBSERVICE_CUSTOM_STORE https://ecommerce-admin.cambridge.org/konakart/services/KKWSCustomStoreService?wsdl
+        SetEnv KK_WEBSERVICE_CUSTOM_STORE http://konakart-central-live.aws.cambridge.org:8780/konakart/services/KKWSCustomStoreService?wsdl
 
         SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
 
