@@ -53,4 +53,41 @@ class wmp-site-admin-jobs {
     month => absent,
     monthday => absent,
   }
+
+  file { 'weekly_jobs.sh':
+    path   => '/usr/local/bin/weekly_jobs.sh',
+    ensure => present,
+    mode   => 755,
+    source => "puppet:///modules/wmp-site-admin-jobs/weekly_jobs.sh",
+  } ~>
+
+  file { 'monthly_jobs.sh':
+    path   => '/usr/local/bin/monthly_jobs.sh',
+    ensure => present,
+    mode   => 755,
+    source => "puppet:///modules/wmp-site-admin-jobs/monthly_jobs.sh",
+  } ~>
+
+  cron { 'monthly_jobs':
+    command => '/usr/local/bin/monthly_jobs.sh > /dev/null 2>&1',
+    ensure  => present,
+    user    => root,
+    weekday => absent,
+    hour    => 00,
+    minute  => 00,
+    month => absent,
+    monthday => 01,
+  }
+
+  cron { 'weekly_jobs':
+    command => '/usr/local/bin/weekly_jobs.sh > /dev/null 2>&1',
+    ensure  => present,
+    user    => root,
+    weekday => 01,
+    hour    => 00,
+    minute  => 00,
+    month => absent,
+    monthday => absent,
+  }
+
 }
