@@ -264,6 +264,7 @@
         <!-- GAW 2071 -->
         <field name="open_access_url" type="string" indexed="true" stored="true"/>
 
+
         <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
 
         <dynamicField name="availabilityCode_*" type="string" indexed="true" stored="true"/>
