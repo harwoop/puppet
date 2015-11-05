@@ -133,7 +133,6 @@
   <dynamicField name="resourceLevel_*" type="string" indexed="true" stored="true"  />
   <field name="learningSkills" type="string" indexed="true" stored="true" multiValued="true" />
   <field name="skillArea" type="string" indexed="true" stored="true" multiValued="true" />
-  <field name="primaryResourceType" type="string" indexed="true" stored="true" />
 
   <field name="alphaTitleSort" type="alphaOnlySort" indexed="true" stored="false"/>
 
