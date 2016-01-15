@@ -9,7 +9,7 @@ class wmp-site-admin-jobs {
 
   cron { 'update_jobs_cron':
     command => '/usr/local/bin/update_jobs.sh > /dev/null 2>&1',
-    ensure  => absent,
+    ensure  => present,
     user    => root,
     hour    => 16,
     minute  => 00,
