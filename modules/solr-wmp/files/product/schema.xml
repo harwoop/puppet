@@ -156,6 +156,8 @@
         <field name="authorForename" type="alphaOnlySort" indexed="true" stored="true" sortMissingLast="true"/>
         <field name="authorSurname" type="alphaOnlySort" indexed="true" stored="true" sortMissingLast="true"/>
         <field name="accessControlSystem" type="string" indexed="true" stored="true"/>
+        <field name="website" type="string" indexed="true" stored="true"/>
+        <field name="qualification" type="string" indexed="true" stored="true"/>
 
         <!-- https://jira.cambridge.org/browse/WMPCEUSUK-1308-->
         <field name="containedLegend" type="string" indexed="true" stored="true"/>
