@@ -129,4 +129,20 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     content => template("wmp-site-dev/voyeur_authorized_keys.erb"),
     require => File['voyeur-ssh'],
   }
+
+  cron { "clear-tomcat-logs":
+          command => "find /data/tomcat/logs/ -mtime +14 -delete > /dev/null 2>&1",
+          user => "root",
+          hour => 2,
+          minute => 5,
+          ensure => present,
+  }
+
+  cron { "zip-tomcat-logs":
+          command => "find /data/tomcat/logs/ -mtime +1 -exec gzip {} \; > /dev/null 2>&1",
+          user => "root",
+          hour => 2,
+          minute => 15,
+          ensure => present,
+  }
 }
