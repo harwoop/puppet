@@ -1,10 +1,16 @@
 # == Class: tomcat
-class tomcat ( $minmem = undef, $permgen = undef ) {
+class tomcat ( $minmem = undef, $maxmem = undef, $permgen = undef ) {
   
   if $minmem == undef {
-    $minmem_opt = '2048m'
+    $minmem_opt = '4096m'
   } else {
     $minmem_opt = $minmem
+  }
+  
+  if $maxmem == undef {
+    $maxmem_opt = '4096m'
+  } else {
+    $maxmem_opt = $maxmem
   }
 
   if $permgen == undef {
