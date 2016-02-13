@@ -1,2 +1,2 @@
 JAVA_HOME=/usr/java/default
-CATALINA_OPTS="-Xms<%= minmem_opt %> -XX:PermSize=<%= permgen_opt %> -d64"
+CATALINA_OPTS="-Xms<%= minmem_opt %> -Xmx<%= maxmem_opt %> -XX:PermSize=<%= permgen_opt %> -d64"
