@@ -10,8 +10,7 @@ class httpd {
     name      => 'httpd',
     ensure    => running,
     enable    => true,
-    subscribe => File['httpd.conf'],
-    subscribe => File['pagespeed.conf'],
+    subscribe => [ File['httpd.conf'], File['pagespeed.conf'], ],
   }
       
   file { 'httpd.conf':
