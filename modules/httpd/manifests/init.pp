@@ -11,6 +11,7 @@ class httpd {
     ensure    => running,
     enable    => true,
     subscribe => File['httpd.conf'],
+    subscribe => File['pagespeed.conf'],
   }
       
   file { 'httpd.conf':
