@@ -10,7 +10,6 @@ class mod-pagespeed {
     path    => '/etc/httpd/conf.d/pagespeed.conf',
     ensure  => file,
     source  => "puppet:///modules/mod-pagespeed/pagespeed.conf",
-    notify  => Service["httpd"],
   }
 
 }
