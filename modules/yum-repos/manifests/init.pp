@@ -19,5 +19,5 @@ class yum-repos {
     ensure  => file,
     source  => 'puppet:///modules/yum-repos/newrelic.repo',
   }
-
+  include 'glibc-latest'
 }
