@@ -125,12 +125,12 @@
   <field name="componentName" type="string" indexed="true" stored="true"  />
   <field name="componentCourseLevel" type="string" indexed="true" stored="true"  />
   <field name="resourceLevel" type="string" indexed="true" stored="true"  />
-  <dynamicField name="unit_*" type="string" indexed="true" stored="true" /><!-- * component ID -->
-  <dynamicField name="lesson_*" type="string" indexed="true" stored="true"  /><!-- * component ID -->
-  <dynamicField name="component_*" type="string" indexed="true" stored="true" multiValued="true"  /><!-- * Family ID -->
-  <dynamicField name="componentName_*" type="string" indexed="true" stored="true"  /><!-- * component ID -->
-  <dynamicField name="componentCourseLevel_*" type="string" indexed="true" stored="tru*e"  /><!--  component ID -->
-  <dynamicField name="resourceLevel_*" type="string" indexed="true" stored="true"  /><!-- * Family ID -->
+  <dynamicField name="unit_*" type="string" indexed="true" stored="true" />
+  <dynamicField name="lesson_*" type="string" indexed="true" stored="true"  />
+  <dynamicField name="component_*" type="string" indexed="true" stored="true"  />
+  <dynamicField name="componentName_*" type="string" indexed="true" stored="true"  />
+  <dynamicField name="componentCourseLevel_*" type="string" indexed="true" stored="true"  />
+  <dynamicField name="resourceLevel_*" type="string" indexed="true" stored="true"  />
   <field name="learningSkills" type="string" indexed="true" stored="true" multiValued="true" />
   <field name="skillArea" type="string" indexed="true" stored="true" multiValued="true" />
   <field name="primaryResourceType" type="string" indexed="true" stored="true" />
