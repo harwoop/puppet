@@ -1,0 +1,6 @@
+/app/scripts/apache-nanny-audit.log {
+    missingok
+    notifempty
+    daily
+    delaycompress
+}
