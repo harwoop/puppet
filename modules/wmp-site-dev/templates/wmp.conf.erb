@@ -62,14 +62,13 @@ ExtendedStatus On
         SetEnv WMP_TRANSACTIONS_AUTO Y
         SetEnv WMP_API_KEY $2a$12$hG0PSzLZgkcEe6354YmjpuQ25Vt90mp3K.qH52LD7zE8nrlYpPtNO
         SetEnv WMP_MONGO_CLUSTER nosql.eu.aws.cambridge.org:27017,web1.eu.aws.cambridge.org:27017,web2.eu.aws.cambridge.org:27017,web3.eu.aws.cambridge.org:27017
-
+        
         SetEnv KK_WEBSERVICE_USER quartzAdmin@cambridge.org
         SetEnv KK_WEBSERVICE_PASSWORD f$>!}huKtY4!hE3U
         SetEnv KK_WEBSERVICE https://ecommerce-admin.cambridge.org/konakartadmin/services/KKWSAdmin?wsdl
         SetEnv KK_WEBSERVICE_CUSTOM_STORE http://konakart-central-live.aws.cambridge.org:8780/konakart/services/KKWSCustomStoreService?wsdl
 
         SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
-
 
     SetEnv LIVE_NODE Y
 
@@ -85,11 +84,11 @@ ExtendedStatus On
 
                 RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
                 RewriteRule ^([a-zA-Z]{2}\/)?knowledge\/discountpromotion\/?$ /wm-ecommerce-web/academic/landingPage/%1? [R=301,L]
-
+	
                 RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
                 RewriteRule ^([a-zA-Z]{2}\/)?elt\/discountpromotion\/?$ /wm-ecommerce-web/english/landingPage/%1? [R=301,L]
 
-                RewriteRule ^(?:[a-zA-Z]{2}\/|ukschools\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1&%{QUERY_STRING} [NC,L]
+                RewriteRule ^(?:[a-zA-Z]{2}\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1&%{QUERY_STRING} [NC,L]
                 RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
                 #EXAMPLE WITH ACTIVE DIR_REL
                 #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /academic/$3 [L]
@@ -189,6 +188,5 @@ ExtendedStatus On
     # Additional mime types
     AddType video/mp4 .m4v
 </VirtualHost>
-
 
 ##
