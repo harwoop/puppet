@@ -312,6 +312,9 @@
         <!-- GAW 788 -->
         <dynamicField name="answerMonth_*" type="date" indexed="true" stored="true"/>
         <dynamicField name="answerMpubDate_unified_*" type="date" indexed="true" stored="true"/>
+
+        <!-- GAW-2755 -->
+        <dynamicField name="availabilityCodeBicbasic_*" type="string" indexed="true" stored="true"/>
     </fields>
 
 

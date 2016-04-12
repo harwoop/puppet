@@ -90,4 +90,23 @@ class wmp-site-admin-jobs {
     monthday => absent,
   }
 
+
+  file { 'spirit_signups.sh':
+    path   => '/usr/local/bin/spirit_signups.sh',
+    ensure => present,
+    mode   => 755,
+    source => "puppet:///modules/wmp-site-admin-jobs/spirit_signups.sh",
+  } ~>
+
+  cron { 'spirit_signups':
+    command => '/usr/local/bin/spirit_signups.sh > /dev/null 2>&1',
+    ensure  => present,
+    user    => root,
+    hour    => absent,
+    minute  => '*/15',
+    month => absent,
+    monthday => absent,
+    weekday => absent,
+  }
+
 }

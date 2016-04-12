@@ -68,43 +68,56 @@ ExtendedStatus On
         SetEnv KK_WEBSERVICE https://ecommerce-admin.cambridge.org/konakartadmin/services/KKWSAdmin?wsdl
         SetEnv KK_WEBSERVICE_CUSTOM_STORE http://konakart-central-live.aws.cambridge.org:8780/konakart/services/KKWSCustomStoreService?wsdl
 
+        SetEnv SPIRIT_API_USERNAME CUPAPIUser
+        SetEnv SPIRIT_API_PASSWORD X2db6j8G3Z6Cr
+        SetEnv SPIRIT_FTP_HOST 213.48.118.101
+        SetEnv SPIRIT_FTP_USERNAME CUPSignUps
+        SetEnv SPIRIT_FTP_PASSWORD 7AstiFiU
+        SetEnv SPIRIT_SFTP_HOST sftp.education.co.uk
+        SetEnv SPIRIT_SFTP_USERNAME cupdatafiles
+        SetEnv SPIRIT_SFTP_PASSWORD x5fzy3vh
+
         SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
 
-
-    SetEnv LIVE_NODE Y
+        SetEnv LIVE_NODE Y
 
         Options Indexes FollowSymLinks
         AllowOverride None
         Order allow,deny
         Allow from all
         <IfModule mod_rewrite.c>
-                RewriteEngine On
+            RewriteEngine On
 
-                RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
-                RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
+            RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+            RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
 
-                RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
-                RewriteRule ^([a-zA-Z]{2}\/)?knowledge\/discountpromotion\/?$ /wm-ecommerce-web/academic/landingPage/%1? [R=301,L]
+            RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+            RewriteRule ^([a-zA-Z]{2}\/)?knowledge\/discountpromotion\/?$ /wm-ecommerce-web/academic/landingPage/%1? [R=301,L]
 
-                RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
-                RewriteRule ^([a-zA-Z]{2}\/)?elt\/discountpromotion\/?$ /wm-ecommerce-web/english/landingPage/%1? [R=301,L]
+            RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+            RewriteRule ^([a-zA-Z]{2}\/)?elt\/discountpromotion\/?$ /wm-ecommerce-web/english/landingPage/%1? [R=301,L]
 
-                RewriteRule ^(?:[a-zA-Z]{2}\/|ukschools\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1&%{QUERY_STRING} [NC,L]
-                RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
-                #EXAMPLE WITH ACTIVE DIR_REL
-                #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /academic/$3 [L]
-                RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L]
+            RewriteRule ^(?:[a-zA-Z]{2}\/|ukschools\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1&%{QUERY_STRING} [NC,L]
+            RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
+            #EXAMPLE WITH ACTIVE DIR_REL
+            #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /academic/$3 [L]
+            RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L]
 
-                #Breaks C5 Dashboard, force the removal of the CC.
-                RewriteCond %{REQUEST_URI} ^(.*)?([a-zA-Z]{2})\/(dashboard)(.*)?$
-                #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /learning/$3 [L,R=301]
-                RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L,R=301]
+            #Breaks C5 Dashboard, force the removal of the CC.
+            RewriteCond %{REQUEST_URI} ^(.*)?([a-zA-Z]{2})\/(dashboard)(.*)?$
+            #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /learning/$3 [L,R=301]
+            RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L,R=301]
 
-                #Home links now go to url/xx/, this gets rid of xx/
-                RewriteCond %{REQUEST_URI} !^(.*)/(dashboard)(.*)?$
-                RewriteCond %{REQUEST_URI} ^(.*)/([a-zA-Z]{2})/$
-                #RewriteRule ^(.*)$ /academic/ [L,R=301]
-                RewriteRule ^(.*)$ / [L,R=301]
+            #Breaks C5 Dashboard, force the removal of the CC.
+            RewriteCond %{REQUEST_URI} ^(.*)?([a-zA-Z]{2})\/(dashboard)(.*)?$
+            #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /learning/$3 [L,R=301]
+            RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L,R=301]
+
+            #Home links now go to url/xx/, this gets rid of xx/
+            RewriteCond %{REQUEST_URI} !^(.*)/(dashboard)(.*)?$
+            RewriteCond %{REQUEST_URI} ^(.*)/([a-zA-Z]{2})/$
+            #RewriteRule ^(.*)$ /academic/ [L,R=301]
+            RewriteRule ^(.*)$ / [L,R=301]
 
             RewriteCond %{REQUEST_URI} !^/mod_pagespeed_[a-z_]+$
             RewriteCond %{REQUEST_URI} !^/server-status
@@ -171,7 +184,7 @@ ExtendedStatus On
         Deny from all
     </Directory>
 
-    # IE7 compatibility fix..
+    # IE7 compatibility fix
     <IfModule mod_headers.c>
       Header set X-UA-Compatible "IE=edge,chrome=1"
       <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webapp|webm|webp|woff|xml|xpi)$">
