@@ -17,7 +17,7 @@ class cron {
 	}
 
         cron { "puppet-clear-logs":
-                command => "/usr/bin/find /var/lib/puppet/clientbucket/ -type f -mtime +14 -atime +14 -delete > /dev/null 2>&1",
+                command => "/usr/bin/find /var/lib/puppet/clientbucket/ -mtime +14 -atime +14 -delete > /dev/null 2>&1",
                 user => "root",
                 hour => 5,
                 minute => $minute3,
