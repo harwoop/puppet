@@ -98,6 +98,8 @@
    -->
 
   <field name="_version_" type="long" indexed="true" stored="true"/>
+
+  <field name="fID" type="int" indexed="true" stored="true"/>
   <field name="resourceId" type="string" indexed="true" stored="true" />
   <field name="familyId" type="string" indexed="true" stored="true"/>
   <field name="familyIds" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -123,6 +125,12 @@
   <field name="gID" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="fileSizeStr" type="string" indexed="true" stored="true"/>
   <field name="fileSizeRaw" type="int" indexed="true" stored="true"/>
+  <field name="unit" type="string" indexed="true" stored="true" />
+  <field name="lesson" type="string" indexed="true" stored="true"  />
+  <field name="component" type="string" indexed="true" stored="true"  />
+  <field name="componentName" type="string" indexed="true" stored="true"  />
+  <field name="componentCourseLevel" type="string" indexed="true" stored="true"  />
+  <field name="resourceLevel" type="string" indexed="true" stored="true"  />
   <dynamicField name="unit_*" type="string" indexed="true" stored="true" /><!-- * component ID -->
   <dynamicField name="lesson_*" type="string" indexed="true" stored="true"  /><!-- * component ID -->
   <dynamicField name="component_*" type="string" indexed="true" stored="true" multiValued="true"  /><!-- * Family ID -->
