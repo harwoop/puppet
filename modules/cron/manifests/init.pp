@@ -40,15 +40,15 @@ class cron {
                 ensure => present,
         }
 
-	file { '/etc/cron.deny':
-	ensure => 'present',
-	mode    => '0644',
-	source => "puppet:///modules/cron/cron.deny",
-	}
-	file    { '/etc/at.deny':
-	ensure => 'present',
-	mode    => '0644',
-	source => "puppet:///modules/cron/at.deny",
+       file { '/etc/cron.deny':
+       ensure => 'present',
+       mode    => '0644',
+       source => "puppet:///modules/cron/cron.deny",
+       }
+       file    { '/etc/at.deny':
+       ensure => 'present',
+       mode    => '0644',
+       source => "puppet:///modules/cron/at.deny",
 }
 }
 
