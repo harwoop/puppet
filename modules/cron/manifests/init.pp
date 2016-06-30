@@ -21,7 +21,7 @@ class cron {
     		path   => '/usr/local/bin/puppet_clientbucket_cleanup.sh',
     		ensure => present,
     		mode   => 750,
-    		source => "puppet:///modules/cron/full_import.sh",
+    		source => "puppet:///modules/cron/puppet_clientbucket_cleanup.sh",
   	} 
 
         cron { "puppet-clear-log-dirs":
