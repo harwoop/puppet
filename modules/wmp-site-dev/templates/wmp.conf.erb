@@ -20,6 +20,12 @@ ExtendedStatus On
         Deny from all
         Allow from localhost 192.168.30. 192.168.31. 10.10.10. 10.10.11. 10.10.12. 131.111.154.
     </Directory>
+    
+    <Location "/tools/packages/cambridge_core/clear_cache">
+        Order Deny,Allow
+        Deny from all
+        Allow from 127.0.0.1 localhost
+    </Location>
 
     Alias /ecomm /data/httpd/wm-ecommerce-web/resources/
     JKMount /wm-ecommerce-web localtomcat
