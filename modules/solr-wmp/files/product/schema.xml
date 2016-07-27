@@ -158,6 +158,7 @@
         <field name="accessControlSystem" type="string" indexed="true" stored="true"/>
         <field name="website" type="string" indexed="true" stored="true"/>
         <field name="qualification" type="string" indexed="true" stored="true"/>
+        <field name="combinedSeriesId" type="string" indexed="true" stored="true"/>
 
         <!-- https://jira.cambridge.org/browse/WMPCEUSUK-1308-->
         <field name="containedLegend" type="string" indexed="true" stored="true"/>
@@ -266,6 +267,10 @@
 
         <!-- GAW 2071 -->
         <field name="open_access_url" type="string" indexed="true" stored="true"/>
+
+        <!-- GAW 2948 Improved `related books` logic -->
+        <field name="title_keywords" type="text_general" indexed="true" stored="false" multiValued="true" termVectors="true"/>
+        <field name="top_level_subject" type="string" indexed="true" stored="true"/>
 
 
         <dynamicField name="isOrHasSiblingTextbookIsbn_*" type="string" indexed="true" stored="true"/>
@@ -377,6 +382,18 @@
     <!-- copy name to alphaNameSort, a field designed for sorting by name -->
     <copyField source="title" dest="alphaTitleSort"/>
     <copyField source="family_title" dest="alphaFamilyTitleSort"/>
+
+    <!-- GAW 2948 Improved `related books` logic -->
+    <copyField source="titleCode" dest="title_keywords"/>
+    <copyField source="title" dest="title_keywords"/>
+    <copyField source="subtitle" dest="title_keywords"/>
+    <copyField source="authors" dest="title_keywords"/>
+    <copyField source="subject2Code" dest="title_keywords"/>
+    <copyField source="top_level_subject" dest="title_keywords"/>
+    <copyField source="readership" dest="title_keywords"/>
+    <copyField source="formatLegend" dest="title_keywords"/>
+    <copyField source="readership" dest="title_keywords"/>
+    <copyField source="competition" dest="title_keywords"/>
 
     <types>
         <!-- field type definitions. The "name" attribute is
@@ -598,7 +615,7 @@
 
         <!-- GAW 1874 -->
         <fieldType name="text_general_engram_copy" class="solr.TextField" positionIncrementGap="100">
-            <!-- This is used to make keywords like Godel and Gödel similar
+            <!-- This is used to make keywords like Godel and G�del similar
                   It should only apply to academic titles
                 -->
             <analyzer type="index">
@@ -643,7 +660,7 @@
                         ignoreCase="true"
                         words="lang/stopwords_en.txt"
                         enablePositionIncrements="true"
-                        />
+                />
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.EnglishPossessiveFilterFactory"/>
                 <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
@@ -659,7 +676,7 @@
                         ignoreCase="true"
                         words="lang/stopwords_en.txt"
                         enablePositionIncrements="true"
-                        />
+                />
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.EnglishPossessiveFilterFactory"/>
                 <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
@@ -694,7 +711,7 @@
                         ignoreCase="true"
                         words="lang/stopwords_en.txt"
                         enablePositionIncrements="true"
-                        />
+                />
                 <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1"
                         catenateWords="1" catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
@@ -708,7 +725,7 @@
                         ignoreCase="true"
                         words="lang/stopwords_en.txt"
                         enablePositionIncrements="true"
-                        />
+                />
                 <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1"
                         catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="1"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
@@ -801,7 +818,7 @@
                   -->
                 <filter class="solr.PatternReplaceFilterFactory"
                         pattern="([^a-z])" replacement="" replace="all"
-                        />
+                />
             </analyzer>
         </fieldType>
 
