@@ -73,6 +73,7 @@ ExtendedStatus On
         SetEnv KK_WEBSERVICE_PASSWORD f$>!}huKtY4!hE3U
         SetEnv KK_WEBSERVICE https://ecommerce-admin.cambridge.org/konakartadmin/services/KKWSAdmin?wsdl
         SetEnv KK_WEBSERVICE_CUSTOM_STORE http://konakart-central-live.aws.cambridge.org:8780/konakart/services/KKWSCustomStoreService?wsdl
+        SetEnv KK_WEBSERVICE_JSON http://konakart-central-live.aws.cambridge.org:8780/konakartadmin/konakartadminjson
 
         SetEnv SPIRIT_API_USERNAME CUPAPIUser
         SetEnv SPIRIT_API_PASSWORD X2db6j8G3Z6Cr
@@ -93,6 +94,9 @@ ExtendedStatus On
         Allow from all
         <IfModule mod_rewrite.c>
             RewriteEngine On
+
+            #for handling gb sitemap
+            RewriteRule ^([a-zA-Z]{2})\/education\/sitemap\.xml$ packages/education/sitemap.xml [NC,L]
 
             RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
             RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
