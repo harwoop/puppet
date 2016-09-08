@@ -98,6 +98,10 @@ ExtendedStatus On
             #for handling gb sitemap
             RewriteRule ^([a-zA-Z]{2})\/education\/sitemap\.xml$ packages/education/sitemap.xml [NC,L]
 
+            RewriteRule ^([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemap_index\.xml$ /files/sitemaps/$2/$1/sitemap_index.xml [NC,L]
+
+            RewriteRule ^([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemaps\/(titles|series|pages)\/sitemap_([0-9]+)\.xml$ files/sitemaps/$2/$1/$3/sitemap_$4.xml [NC,L]
+
             RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
             RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
 
