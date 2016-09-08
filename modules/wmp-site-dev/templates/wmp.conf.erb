@@ -98,16 +98,6 @@ ExtendedStatus On
             #for handling gb sitemap
             RewriteRule ^([a-zA-Z]{2})\/education\/sitemap\.xml$ packages/education/sitemap.xml [NC,L]
 
-            #rewrite rule for sitemap index per business stream
-            #this should allow visits to: www.cambridge.org/gb/education/sitemap_index.xml and its variants
-            #file path should be on files/sitemaps/education/gb/sitemap_index.xml
-            RewriteRule ^([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemap_index\.xml$ /files/sitemaps/$2/$1/sitemap_index.xml [NC,L]
-
-            #rewrite rule for actual sitemap files
-            #this should allow visits to: www.cambridge.org/au/cambridgeenglish/sitemaps/pages/sitemap_2.xml and its variants
-            #file path should be on files/sitemaps/education/gb/titles/sitemap_1.xml
-            ([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemaps\/(titles|series|pages)\/sitemap_([0-9]+)\.xml$ files/sitemaps/$2/$1/$3/sitemap_$4.xml
-
             RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
             RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
 
