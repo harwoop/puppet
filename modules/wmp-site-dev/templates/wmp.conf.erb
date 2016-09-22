@@ -88,6 +88,12 @@ ExtendedStatus On
 
         SetEnv LIVE_NODE Y
 
+        SetEnv EXACT_TARGET_FTP_HOST ftp.s4.exacttarget.com
+
+        SetEnv EXACT_TARGET_FTP_UNAME 1423905
+
+        SetEnv EXACT_TARGET_FTP_PASSWORD CUPGlobal2016!
+
         Options Indexes FollowSymLinks
         AllowOverride None
         Order allow,deny
@@ -98,8 +104,14 @@ ExtendedStatus On
             #for handling gb sitemap
             RewriteRule ^([a-zA-Z]{2})\/education\/sitemap\.xml$ packages/education/sitemap.xml [NC,L]
 
+            #rewrite rule for sitemap index per business stream
+            #this should allow visits to: www.cambridge.org/gb/education/sitemap_index.xml and its variants
+            #file path should be on files/sitemaps/education/gb/sitemap_index.xml
             RewriteRule ^([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemap_index\.xml$ /files/sitemaps/$2/$1/sitemap_index.xml [NC,L]
 
+            #rewrite rule for actual sitemap files
+            #this should allow visits to: www.cambridge.org/au/cambridgeenglish/sitemaps/pages/sitemap_2.xml and its variants
+            #file path should be on files/sitemaps/education/gb/titles/sitemap_1.xml
             RewriteRule ^([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemaps\/(titles|series|pages)\/sitemap_([0-9]+)\.xml$ files/sitemaps/$2/$1/$3/sitemap_$4.xml [NC,L]
 
             RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
