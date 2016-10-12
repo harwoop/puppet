@@ -25,4 +25,37 @@ class httpd_24 {
     group   => 'apache',
     mode    => '0755',
   }
+
+  file { 'httpdir':
+    path    => '/etc/httpd',
+    ensure  => directory,
+    owner   => 'apache',
+    group   => 'apache',
+    mode    => '0750',
+  }
+
+  file { 'httpconfdir':
+    path    => '/etc/httpd/conf',
+    ensure  => directory,
+    owner   => 'apache',
+    group   => 'apache',
+    mode    => '0750',
+  }
+
+  file { 'httpconfddir':
+    path    => '/etc/httpd/conf.d',
+    ensure  => directory,
+    owner   => 'apache',
+    group   => 'apache',
+    mode    => '0750',
+  }
+
+  file { 'httpbindir':
+    path    => '/etc/httpd/bin',
+    ensure  => directory,
+    owner   => 'apache',
+    group   => 'apache',
+    mode    => '0750',
+  }
+
 }
