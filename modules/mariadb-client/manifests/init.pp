@@ -7,7 +7,7 @@ class mariadb-client {
   }
 
  service { 'mariadb':
-    name      => 'mysqld',
+    name      => 'mariadb',
     ensure    => running,
     enable    => true,
   }
