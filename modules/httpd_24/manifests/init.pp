@@ -10,6 +10,14 @@ class httpd_24 {
     name      => 'httpd',
     ensure    => running,
     enable    => true,
+    subscribe => File['httpd.conf'],
+  }
+
+  file { 'httpd.conf':
+    path    => '/etc/httpd/conf/httpd.conf',
+    ensure  => file,
+    require => Package['httpd'],
+    source  => "puppet:///modules/httpd_24/httpd.conf",
   }
 
   file { 'welcome.conf':
