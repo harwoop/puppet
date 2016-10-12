@@ -10,7 +10,6 @@ class mariadb-client {
     name      => 'mysqld',
     ensure    => running,
     enable    => true,
-    subscribe => File['my.cnf'],
   }
 
 }
