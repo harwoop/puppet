@@ -5,4 +5,12 @@ class mariadb-client {
   package { 'mariadb':
     ensure  => installed
   }
+
+ service { 'mariadb':
+    name      => 'mysqld',
+    ensure    => running,
+    enable    => true,
+    subscribe => File['mariadb-conf'],
+  }
+
 }
