@@ -10,10 +10,10 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     ensure  => installed,
   } 
 
-  package { 'cup-wmp-site':
-    ensure  => installed,
-    require => Package['httpd'],
-  } ~>
+#  package { 'cup-wmp-site':
+#    ensure  => installed,
+#    require => Package['httpd'],
+#  } ~>
          
   file { 'data-httpd-wmp-dir':
     path    => '/data/httpd/wmp',
@@ -39,10 +39,11 @@ class wmp-site-dev ( $mysql = undef, $nosql_master = undef, $nosql_slave = "loca
     mode    => '0755',
   } ~>
 
+
   file { 'wmp.conf':
     path    => '/etc/httpd/conf.d/wmp.conf',
     ensure  => file,
-    content  => template("wmp-site-dev/wmp.conf.erb"),
+    content => template("wmp-site-dev/wmp.conf.erb"),
     notify  => Service['httpd'],
   }
 
