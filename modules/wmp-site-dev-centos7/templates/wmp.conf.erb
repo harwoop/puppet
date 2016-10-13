@@ -1,0 +1,230 @@
+ExtendedStatus On
+
+<VirtualHost *:80>
+    ServerAdmin sysadmin@cambridge.org
+    DocumentRoot /data/httpd/wmp
+    ServerName www.cambridge.org
+    ErrorLog /data/logs/httpd/wmp/wmp-error_log
+    CustomLog /data/logs/httpd/wmp/wmp-access_log common
+    AccessFileName WeDontUseHtaccess
+
+    <Location /server-status>
+        SetHandler server-status
+        Order Deny,Allow
+        Deny from all
+        Allow from localhost 192.168.30. 192.168.31. 10.10.10. 10.10.11. 10.10.12. 131.111.154.
+    </Location>
+
+    <Directory "/data/httpd/wmp/files/infra">
+        Order Deny,Allow
+        Deny from all
+        Allow from localhost 192.168.30. 192.168.31. 10.10.10. 10.10.11. 10.10.12. 131.111.154.
+    </Directory>
+    
+    <Location "/tools/packages/cambridge_core/clear_cache">
+        Order Deny,Allow
+        Deny from all
+        Allow from 127.0.0.1 localhost
+    </Location>
+
+    Alias /ecomm /data/httpd/wm-ecommerce-web/resources/
+    JKMount /wm-ecommerce-web localtomcat
+    JKMount /wm-ecommerce-web/* localtomcat
+
+    <Directory "/data/httpd/wmp">
+        SetEnv WMP_MARKETING_SITE_BASE_URL http://<%= domain %>
+        SetEnv WMP_MARKETING_SITE_BASE_URL_SSL https://<%= domain %>
+        SetEnv WMP_MARKETING_SITE_DIR_REL
+        SetEnv WMP_MARKETING_DB_SERVER <%= mysql %>
+        SetEnv WMP_MARKETING_DB_USERNAME concrete_usr2012
+        SetEnv WMP_MARKETING_DB_PASSWORD k3ey!Bo0rd&
+        SetEnv WMP_MARKETING_DB_DATABASE cms_concrete_db2012
+        SetEnv WMP_MARKETING_SITE_CACHE apc
+        SetEnv WMP_MARKETING_SITE_EVENTS true
+        SetEnv IS_ADMIN_NODE <%= (admin_node ? "Y" : "N") %>
+        SetEnv ADMIN_NODE_URL http://admin.cambridge.org/dashboard/
+        SetEnv WMP_SITE_ADMIN_NAME 'Cambridge University Press'
+        SetEnv WMP_SITE_ADMIN_EMAIL concrete5@cambridge.org
+        SetEnv WMP_API_USERNAME concrete5@cambridge.org
+        SetEnv WMP_API_PASSWORD 4RagEsw+g!spU*u
+        SetEnv WMP_VYRE_BASE_URL //<%= domain %>
+        SetEnv WMP_IIS_BASE_URL http://<%= domain %>
+        SetEnv WMP_SALESFORCE_BASE_URL http://cambridge.force.com
+        SetEnv WMP_SOLR_SERVER localhost
+        SetEnv WMP_SOLR_PORT 8080
+        SetEnv WMP_SOLR_MASTER <%= nosql_master %>
+        SetEnv WMP_SOLR_MASTER_PORT 8080
+        SetEnv WMP_SOLR_INDEX wmp
+        SetEnv WMP_SOLR_INDEX_PATH /wmp/
+        SetEnv WMP_MONGO_MASTER <%= nosql_master %>
+        SetEnv WMP_MONGO_MASTER_PORT 27017
+        SetEnv WMP_MONGO_SERVER <%= nosql_slave %>
+        SetEnv WMP_MONGO_PORT 27017
+        SetEnv WMP_MONGO_REPLICA_SET wmp
+        SetEnv WMP_API_ROOT_URL http://api.cambridge.org/
+        SetEnv WMP_USE_MINIFICATION <%= (admin_node ? "N" : "Y") %>
+        SetEnv WMP_USE_GLOBAL_NAV_LOCAL_LINKS <%= (admin_node ? "Y" : "N") %>
+        SetEnv WMP_TRANSACTIONS_ALWAYS N
+        SetEnv WMP_TRANSACTIONS_AUTO Y
+        SetEnv WMP_API_KEY $2a$12$hG0PSzLZgkcEe6354YmjpuQ25Vt90mp3K.qH52LD7zE8nrlYpPtNO
+        SetEnv WMP_MONGO_CLUSTER nosql.eu.aws.cambridge.org:27017,web1.eu.aws.cambridge.org:27017,web2.eu.aws.cambridge.org:27017,web3.eu.aws.cambridge.org:27017
+
+        SetEnv KK_WEBSERVICE_USER quartzAdmin@cambridge.org
+        SetEnv KK_WEBSERVICE_PASSWORD f$>!}huKtY4!hE3U
+        SetEnv KK_WEBSERVICE https://ecommerce-admin.cambridge.org/konakartadmin/services/KKWSAdmin?wsdl
+        SetEnv KK_WEBSERVICE_CUSTOM_STORE http://konakart-central-live.aws.cambridge.org:8780/konakart/services/KKWSCustomStoreService?wsdl
+        SetEnv KK_WEBSERVICE_JSON http://konakart-central-live.aws.cambridge.org:8780/konakartadmin/konakartadminjson
+
+        SetEnv SPIRIT_API_USERNAME CUPAPIUser
+        SetEnv SPIRIT_API_PASSWORD X2db6j8G3Z6Cr
+        SetEnv SPIRIT_FTP_HOST 213.48.118.101
+        SetEnv SPIRIT_FTP_USERNAME CUPSignUps
+        SetEnv SPIRIT_FTP_PASSWORD 7AstiFiU
+        SetEnv SPIRIT_SFTP_HOST sftp.education.co.uk
+        SetEnv SPIRIT_SFTP_USERNAME cupdatafiles
+        SetEnv SPIRIT_SFTP_PASSWORD x5fzy3vh
+
+        SetEnv ACAD_MAINTENANCE_MODE <%= (disable_ecommerce ? "1" : "0") %>
+
+        SetEnv LIVE_NODE Y
+
+        SetEnv EXACT_TARGET_FTP_HOST ftp.s4.exacttarget.com
+
+        SetEnv EXACT_TARGET_FTP_UNAME 1423905
+
+        SetEnv EXACT_TARGET_FTP_PASSWORD CUPGlobal2016!
+
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+        <IfModule mod_rewrite.c>
+            RewriteEngine On
+
+            #for handling gb sitemap
+            RewriteRule ^([a-zA-Z]{2})\/education\/sitemap\.xml$ packages/education/sitemap.xml [NC,L]
+
+            #rewrite rule for sitemap index per business stream
+            #this should allow visits to: www.cambridge.org/gb/education/sitemap_index.xml and its variants
+            #file path should be on files/sitemaps/education/gb/sitemap_index.xml
+            RewriteRule ^([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemap_index\.xml$ /files/sitemaps/$2/$1/sitemap_index.xml [NC,L]
+
+            #rewrite rule for actual sitemap files
+            #this should allow visits to: www.cambridge.org/au/cambridgeenglish/sitemaps/pages/sitemap_2.xml and its variants
+            #file path should be on files/sitemaps/education/gb/titles/sitemap_1.xml
+            RewriteRule ^([a-zA-Z]{2})\/(education|academic|cambridgeenglish|bibles)\/sitemaps\/(titles|series|pages)\/sitemap_([0-9]+)\.xml$ files/sitemaps/$2/$1/$3/sitemap_$4.xml [NC,L]
+
+            RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+            RewriteRule ^([a-zA-Z]{2}\/)?(knowledge\/(academic)|elt\/(english))_discountpromotion\/?$ /wm-ecommerce-web/$3$4/landingPage/%1? [R=301,L]
+
+            RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+            RewriteRule ^([a-zA-Z]{2}\/)?knowledge\/discountpromotion\/?$ /wm-ecommerce-web/academic/landingPage/%1? [R=301,L]
+
+            RewriteCond %{QUERY_STRING} (?<!\w)code=([^&\s]+) [NC]
+            RewriteRule ^([a-zA-Z]{2}\/)?elt\/discountpromotion\/?$ /wm-ecommerce-web/english/landingPage/%1? [R=301,L]
+
+            RewriteRule ^(?:[a-zA-Z]{2}\/|ukschools\/)?((\d{10})|(\d{13})|(\d{9}([A-Z]|[a-z]))|(\d{12}([A-Z]|[a-z])))$ tools/packages/cambridge_data/isbnFilter?isbn=$1&%{QUERY_STRING} [NC,L]
+            RewriteCond %{REQUEST_URI} ^(.*)?(!.php|\.)(.*)$
+            #EXAMPLE WITH ACTIVE DIR_REL
+            #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /academic/$3 [L]
+            RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L]
+
+            #Breaks C5 Dashboard, force the removal of the CC.
+            RewriteCond %{REQUEST_URI} ^(.*)?([a-zA-Z]{2})\/(dashboard)(.*)?$
+            #RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /learning/$3 [L,R=301]
+            RewriteRule ^([a-zA-Z]{2})(/)(.*)$ /$3 [L,R=301]
+
+            #Home links now go to url/xx/, this gets rid of xx/
+            RewriteCond %{REQUEST_URI} !^(.*)/(dashboard)(.*)?$
+            RewriteCond %{REQUEST_URI} ^(.*)/([a-zA-Z]{2})/$
+            #RewriteRule ^(.*)$ /academic/ [L,R=301]
+            RewriteRule ^(.*)$ / [L,R=301]
+
+            RewriteCond %{REQUEST_URI} !^/mod_pagespeed_[a-z_]+$
+            RewriteCond %{REQUEST_URI} !^/server-status
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME}/index.html !-f
+            RewriteCond %{REQUEST_FILENAME}/index.php !-f
+            RewriteRule . index.php [L]
+
+            <Files "GruntFile.js">
+                Order Allow,Deny
+                Deny from all
+            </Files>
+        </IfModule>
+    </Directory>
+
+    <Directory /data/httpd/wmp/packages/mainio_minco/libraries/3rdparty/minify-2.1.5/min>
+        <IfModule mod_rewrite.c>
+            RewriteEngine on
+            # You may need RewriteBase on some servers
+            #RewriteBase /min
+            # rewrite URLs like "/min/f=..." to "/min/?f=..."
+            RewriteRule ^([bfg]=.*)  index.php?$1 [L,NE]
+        </IfModule>
+        <IfModule mod_env.c>
+            # In case AddOutputFilterByType has been added
+            SetEnv no-gzip
+        </IfModule>
+    </Directory>
+
+    # Security - no peekee in these directories
+    <Directory  ~ "\.svn">
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
+    <Directory /data/httpd/wmp/tmp>
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
+    <Directory /data/httpd/wmp/cache>
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
+    <Directory /data/httpd/wmp/support>
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
+    <Directory /data/httpd/wmp/v2>
+        AuthName Title
+        AuthUserFile /data/httpd/nonexistant
+        Require valid-user
+    </Directory>
+
+    <Directory /data/httpd/wmp/concrete/libraries/3rdparty/securimage/database>
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
+    <Directory /data/httpd/wmp/files/backups>
+        Order Deny,Allow
+        Deny from all
+    </Directory>
+
+    # IE7 compatibility fix
+    <IfModule mod_headers.c>
+      Header set X-UA-Compatible "IE=edge,chrome=1"
+      <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webapp|webm|webp|woff|xml|xpi)$">
+        Header unset X-UA-Compatible
+      </FilesMatch>
+    </IfModule>
+
+    # Expires
+    ExpiresActive On
+    ExpiresByType image/gif A604800
+    ExpiresByType image/jpeg A604800
+    ExpiresByType image/png A604800
+    ExpiresByType image/tiff A604800
+    ExpiresByType text/css A604800
+    ExpiresByType text/javascript A604800
+
+    # Additional mime types
+    AddType video/mp4 .m4v
+</VirtualHost>
+
+
+##
