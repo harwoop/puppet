@@ -7,7 +7,7 @@ class php-wmp ($mysql_cache_enabled = true, $apc_cache_size = "128M") {
   }
 
   file { 'php.ini':
-    path    => '/opt/remi/php56/root/etc/php.ini',
+    path    => '/etc/php.ini',
     ensure  => file,
     require => Package['php'],
     source  => "puppet:///modules/php-wmp/php.ini",
@@ -51,7 +51,7 @@ class php-wmp ($mysql_cache_enabled = true, $apc_cache_size = "128M") {
   }
 
   file { 'apc.ini':
-    path    => '/opt/remi/php56/root/etc/php.d/40-apcu.ini',
+    path    => '/etc/php.d/apc.ini',
     ensure  => file,
     require => Package['php-pecl-apc'],
     content  => template("php-wmp/apc.ini.erb"),
